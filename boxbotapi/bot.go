@@ -54,6 +54,11 @@ func NewBotAPIWithAPIEndpoint(token, apiEndpoint string) (*BotAPI, error) {
 //
 // It requires a token, provided by @BotFather on Telegram and API endpoint.
 func NewBotAPIWithClient(token, apiEndpoint string, client HTTPClient) (*BotAPI, error) {
+	//bmadd begin
+	if client == nil {
+		client = &http.Client{}
+	}
+	//bmadd end
 	bot := &BotAPI{
 		Token:           token,
 		Client:          client,
@@ -65,7 +70,7 @@ func NewBotAPIWithClient(token, apiEndpoint string, client HTTPClient) (*BotAPI,
 
 	self, err := bot.GetMe()
 	if err != nil {
-		return nil, err
+		// return nil, err //bmadd -- need to open it
 	}
 
 	bot.Self = self

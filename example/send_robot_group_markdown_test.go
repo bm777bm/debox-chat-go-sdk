@@ -18,97 +18,7 @@ import (
 // content := "im content"                                                                               //消息内容
 // objectName := "RCD:Graphic"
 // href :="https://debox.pro/"   图文消息，传入跳转链接
-var (
-	// Menu texts
-	firstMenu  = "<b>Menu 1</b>\n\nA box button message."
-	secondMenu = "<b>Menu 2</b>\n\nA box button message."
 
-	// Button texts
-	nextButton     = "Next"
-	nextButton1    = "Next1"
-	nextButton6    = "N"
-	backButton     = "Back"
-	tutorialButton = "Tutorial"
-	tokenUrl       = "https://deswap.pro/?from_chain_id=-200&from_address=11111111111111111111111111111111&to_chain_id=-200&to_address=BpykKPT9DoPy2WoZspkd7MvUb9QAPtX86ojmrg48pump"
-	// Store bot screaming status
-	screaming = false
-	bot       *boxbotapi.BotAPI
-
-	// Keyboard layout for the first menu. One button, one row
-
-	firstMenuMarkup = boxbotapi.NewInlineKeyboardMarkup(
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonURL("url1", tokenUrl),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonURL("url", tokenUrl),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonURL("url", tokenUrl),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonURL("url", tokenUrl),
-		),
-	)
-
-	// Keyboard layout for the second menu. Two buttons, one per row
-	secondMenuMarkup = boxbotapi.NewInlineKeyboardMarkup(
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(backButton, backButton),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonURL(tutorialButton, "https://core.telegram.org/bots/api"),
-		),
-	)
-
-	thirdMenuMarkup = boxbotapi.NewInlineKeyboardMarkup(
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonURL(tutorialButton, tokenUrl),
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("👍🏻", "reaction", "61", "#00ff00"),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("👍🏻", "reaction", "61", "#00ff00"),
-			boxbotapi.NewInlineKeyboardButtonData("👎🏻", "reaction"),
-			boxbotapi.NewInlineKeyboardButtonData("❤️", "reaction"),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-		),
-
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("BTC", "reaction1", "61", "#ff0000"),
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("BNB", "reaction1", "27.5%", "#00ff00"),
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("BNB", "reaction", "27.5%", "#0000ff"),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("BTC", "reaction1", " ", "#ff0000"),
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("BNB", "reaction1", " ", "#00ff00"),
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("BNB", "reaction", " ", "#0000ff"),
-		),
-	)
-)
 
 func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 
@@ -121,13 +31,6 @@ func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 	client = dbx_chat.CreateNormalInterface("http://127.0.0.1:8042", xApiKey)
 
 	//https://s.debox.pro/group?id=ii0jiad9
-	//https://s.debox.pro/group?id=ii0jiad9
-	// toUserId := "uvg2p6ho" //接收者id
-	//https://s.debox.pro/group?id=ayoe8lz6
-	//https://s.debox.pro/group?id=nhu775tk
-	//https://s.debox.pro/group?id=mao2vuey
-	//https://s.debox.pro/group?id=w8cgtfof
-	// https://s.debox.pro/group?id=ymor0jin
 	var toUserId = "x1dei8zv1"
 	groupId := "fxi3hqo5" //群组id
 	groupId = "128907"    //test1 正式
