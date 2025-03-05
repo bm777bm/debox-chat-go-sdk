@@ -1,4 +1,4 @@
-package debox_chat_go_sdk
+package deboxapi
 
 // request sends a request to SLS.
 import (
@@ -15,7 +15,7 @@ import (
 
 // request sends a request to alibaba cloud Log Service.
 // @note if error is nil, you must call http.Response.Body.Close() to finalize reader
-func (c *Client) request(project, method, uri string, headers map[string]string, body []byte) (*http.Response, error) {
+func (c *BotAPIBox) request(project, method, uri string, headers map[string]string, body []byte) (*http.Response, error) {
 	// The caller should provide 'x-log-bodyrawsize' header
 	if _, ok := headers[HTTPHeaderBodyRawSize]; !ok {
 		return nil, fmt.Errorf("Can't find 'x-chat-bodyrawsize' header")

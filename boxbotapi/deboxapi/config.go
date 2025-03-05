@@ -1,4 +1,4 @@
-package debox_chat_go_sdk
+package deboxapi
 
 const (
 	version         = "0.6.0"     // SDK version

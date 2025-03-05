@@ -1,4 +1,4 @@
-package debox_chat_go_sdk
+package deboxapi
 
 import (
 	"crypto/hmac"

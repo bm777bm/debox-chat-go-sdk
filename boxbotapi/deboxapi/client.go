@@ -1,4 +1,4 @@
-package debox_chat_go_sdk
+package deboxapi
 
 import (
 	"encoding/json"
@@ -34,12 +34,12 @@ const (
 )
 
 // Error defines sls error
-type Error struct {
-	HTTPCode  int32  `json:"httpCode"`
-	Code      string `json:"errorCode"`
-	Message   string `json:"errorMessage"`
-	RequestID string `json:"requestID"`
-}
+// type Error struct {
+// 	HTTPCode  int32  `json:"httpCode"`
+// 	Code      string `json:"errorCode"`
+// 	Message   string `json:"errorMessage"`
+// 	RequestID string `json:"requestID"`
+// }
 
 func IsDebugLevelMatched(level int) bool {
 	return level <= GlobalDebugLevel
@@ -55,21 +55,10 @@ func NewClientError(err error) *Error {
 	}
 	clientError := new(Error)
 	clientError.HTTPCode = -1
-	clientError.Code = "ClientError"
+	// clientError.Code = "ClientError"
+	clientError.Code = -1
 	clientError.Message = err.Error()
 	return clientError
-}
-
-func (e Error) String() string {
-	b, err := json.MarshalIndent(e, "", "    ")
-	if err != nil {
-		return ""
-	}
-	return string(b)
-}
-
-func (e Error) Error() string {
-	return e.String()
 }
 
 func IsTokenError(err error) bool {
@@ -81,8 +70,8 @@ func IsTokenError(err error) bool {
 	return false
 }
 
-// Client ...
-type Client struct {
+// BotAPI ...
+type BotAPIBox struct {
 	Endpoint       string // IP or hostname of SLS endpoint
 	XApiKey        string
 	UserAgent      string // default defaultLogUserAgent
@@ -95,31 +84,74 @@ type Client struct {
 }
 
 // SetUserAgent set a custom userAgent
-func (c *Client) SetUserAgent(userAgent string) {
+func (c *BotAPIBox) SetUserAgent(userAgent string) {
 	c.UserAgent = userAgent
 }
 
 // SetHTTPClient set a custom http client, all request will send to sls by this client
-func (c *Client) SetHTTPClient(client *http.Client) {
+func (c *BotAPIBox) SetHTTPClient(client *http.Client) {
 	c.HTTPClient = client
 }
 
 // SetAuthVersion set signature version that the client used
-func (c *Client) SetAuthVersion(version AuthVersionType) {
+func (c *BotAPIBox) SetAuthVersion(version AuthVersionType) {
 	c.accessKeyLock.Lock()
 	c.AuthVersion = version
 	c.accessKeyLock.Unlock()
 }
 
 // ResetAccessKeyToken reset client's access key token
-func (c *Client) ResetAccessKeyToken(xApiKey string) {
+func (c *BotAPIBox) ResetAccessKeyToken(xApiKey string) {
 	c.accessKeyLock.Lock()
 	c.XApiKey = xApiKey
 	c.accessKeyLock.Unlock()
 }
 
+func (bot *BotAPIBox) Send(c Chattable) (*Message, error) {
+	// type Body struct {
+	// 	ToUserId   string `json:"to_user_id"`
+	// 	GroupId    string `json:"group_id"`
+	// 	Title      string `json:"title"`
+	// 	Content    string `json:"content"`
+	// 	Message    string `json:"message"`
+	// 	ObjectName string `json:"object_name"`
+	// 	Href       string `json:"href"`
+	// }
+	// body, err := json.Marshal(Body{
+	// 	ToUserId:   toUserId,
+	// 	GroupId:    groupId,
+	// 	Title:      title,
+	// 	Content:    content,
+	// 	ObjectName: objectName,
+	// 	Message:    message,
+	// 	Href:       href,
+	// })
+	// if err != nil {
+	// 	return nil, err
+	// }
+	var message = c.(MarkdownV2Config)
+	body := message.mashal()
+	h := map[string]string{
+		"x-chat-bodyrawsize": fmt.Sprintf("%d", len(body)),
+		"Content-Type":       "application/json",
+		"Accept-Encoding":    "deflate",
+		"X-API-KEY":          bot.XApiKey,
+	}
+
+	uri := "/openapi/send_robot_group_message"
+	// proj := convert(c, operate)
+	resp, err := bot.request("", "POST", uri, h, body)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+	// return proj, nil
+	return nil, nil
+}
+
 // SendChatMsg send recall message.
-func (c *Client) SendChatMsg(toUserId, groupId, message, opreate string) (*ChatProject, error) {
+func (c *BotAPIBox) SendChatMsg(toUserId, groupId, message, opreate string) (*ChatProject, error) {
 	type Body struct {
 		ToUserId string `json:"to_user_id"`
 		GroupId  string `json:"group_id"`
@@ -153,7 +185,7 @@ func (c *Client) SendChatMsg(toUserId, groupId, message, opreate string) (*ChatP
 }
 
 // RegisterCallbakUrl create a new event.
-func (c *Client) RegisterCallbakUrl(url, method, operate string) (*ChatProject, error) {
+func (c *BotAPIBox) RegisterCallbakUrl(url, method, operate string) (*ChatProject, error) {
 	type Body struct {
 		Url        string `json:"url"`
 		HttpMethod string `json:"http_method"`
@@ -185,7 +217,7 @@ func (c *Client) RegisterCallbakUrl(url, method, operate string) (*ChatProject, 
 }
 
 // SendRobotMsg send recall message.
-func (c *Client) SendRobotMsg(toUserId, message, objectName, opreate string) (*ChatProject, error) {
+func (c *BotAPIBox) SendRobotMsg(toUserId, message, objectName, opreate string) (*ChatProject, error) {
 	type Body struct {
 		ToUserId   string `json:"to_user_id"`
 		FromUserId string `json:"from_user_id"`
@@ -220,7 +252,7 @@ func (c *Client) SendRobotMsg(toUserId, message, objectName, opreate string) (*C
 }
 
 // SendRobotMsg send recall message.
-func (c *Client) SendRobotGroupMsg(toUserId, groupId, title, content, message, objectName, operate, href string) (*ChatProject, error) {
+func (c *BotAPIBox) SendRobotGroupMsg(toUserId, groupId, title, content, message, objectName, operate, href string) (*ChatProject, error) {
 	type Body struct {
 		ToUserId   string `json:"to_user_id"`
 		GroupId    string `json:"group_id"`
@@ -261,13 +293,13 @@ func (c *Client) SendRobotGroupMsg(toUserId, groupId, title, content, message, o
 	return proj, nil
 }
 
-func convert(c *Client, projName string) *ChatProject {
+func convert(c *BotAPIBox, projName string) *ChatProject {
 	c.accessKeyLock.RLock()
 	defer c.accessKeyLock.RUnlock()
 	return convertLocked(c, projName)
 }
 
-func convertLocked(c *Client, projName string) *ChatProject {
+func convertLocked(c *BotAPIBox, projName string) *ChatProject {
 	p, _ := NewChatProject(projName, c.Endpoint, c.XApiKey)
 	p.UserAgent = c.UserAgent
 	p.AuthVersion = c.AuthVersion
@@ -285,6 +317,6 @@ func convertLocked(c *Client, projName string) *ChatProject {
 }
 
 // Close the client
-func (c *Client) Close() error {
+func (c *BotAPIBox) Close() error {
 	return nil
 }

@@ -1,4 +1,4 @@
-package debox_chat_go_sdk
+package deboxapi
 
 const MISSING_CONTENT_LENGTH = "MissingContentLength"
 const INVALID_CONTENT_TYPE = "InvalidContentType"

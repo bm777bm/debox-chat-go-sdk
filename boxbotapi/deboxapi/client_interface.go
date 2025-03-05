@@ -1,13 +1,15 @@
-package debox_chat_go_sdk
+package deboxapi
 
 import (
 	"net/http"
 	"time"
+
+	boxbotapi "github.com/debox-pro/debox-chat-go-sdk/boxbotapi"
 )
 
 // CreateNormalInterface create a normal client
-func CreateNormalInterface(endpoint, xApiKey string) ClientInterface {
-	return &Client{
+func CreateNormalInterface(endpoint, xApiKey string) BotAPIInterface {
+	return &BotAPIBox{
 		Endpoint: endpoint,
 		XApiKey:  xApiKey,
 	}
@@ -37,8 +39,8 @@ type UpdateTokenFunction func() (xApiKey string, expireTime time.Time, err error
 //	return tauc, nil
 //}
 
-// ClientInterface for all chat's open api
-type ClientInterface interface {
+// BotAPIInterface for all chat's open api
+type BotAPIInterface interface {
 	SetUserAgent(userAgent string)
 	SetHTTPClient(client *http.Client)
 	// #################### Client Operations #####################
@@ -54,4 +56,5 @@ type ClientInterface interface {
 	RegisterCallbakUrl(url, method, operate string) (*ChatProject, error)
 	SendRobotMsg(toUserId, message, objectName, operate string) (*ChatProject, error)
 	SendRobotGroupMsg(toUserId, groupId, title, content, message, objectName, operate, href string) (*ChatProject, error)
+	Send(c boxbotapi.Chattable) (*boxbotapi.Message, error)
 }

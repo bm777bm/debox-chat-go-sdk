@@ -1,4 +1,4 @@
-package debox_chat_go_sdk
+package deboxapi
 
 import (
 	"net/http"
@@ -7,7 +7,7 @@ import (
 )
 
 type AutoRetryClient struct {
-	chatClient             ClientInterface
+	chatClient             BotAPIInterface
 	shutdown               <-chan struct{}
 	closeFlag              bool
 	tokenUpdateFunc        UpdateTokenFunction

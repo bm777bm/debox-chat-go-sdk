@@ -1,8 +1,9 @@
-package debox_chat_go_sdk
+package deboxapi
 
 import (
-	"gopkg.in/natefinch/lumberjack.v2"
 	"os"
+
+	"gopkg.in/natefinch/lumberjack.v2"
 
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
