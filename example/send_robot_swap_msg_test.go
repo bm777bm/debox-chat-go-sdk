@@ -11,7 +11,9 @@ import (
 	"testing"
 	"time"
 
-	boxbotapi "github.com/debox-pro/debox-chat-go-sdk/deboxapiold"
+	// boxbotapi "github.com/debox-pro/debox-chat-go-sdk/deboxapiold"
+	dbx_chat "github.com/debox-pro/debox-chat-go-sdk/boxbotapi/deboxapi"
+
 
 	common "github.com/debox-pro/debox-chat-go-sdk/common"
 	"github.com/debox-pro/debox-chat-go-sdk/model"
@@ -58,7 +60,7 @@ func TestSendRobotSwapMsg1(t *testing.T) {
 
 	xApiKey := "t2XJiou2Mu6AlEF6" //配置齐全,正式
 	// xApiKeyTest := "ggowK0QRl1UPkPA9" //测试
-	client := boxbotapi.CreateNormalInterface("https://open.debox.pro", xApiKey)
+	client := dbx_chat.CreateNormalInterface("https://open.debox.pro", xApiKey)
 	//7d6089qb
 	groupId := "fxi3hqo5" //test
 	groupId = "l3ixp32y"  //test1
@@ -219,14 +221,14 @@ func TestSendRobotSwapPrivateMsg(t *testing.T) {
 
 	xApiKey := "t2XJiou2Mu6AlEF6"
 
-	client := boxbotapi.CreateNormalInterface("https://open.debox.pro", xApiKey)
+	client := dbx_chat.CreateNormalInterface("https://open.debox.pro", xApiKey)
 	// https://m.debox.pro/card?id=ii0k2v5n
 	toUserId := "ii0k2v5n"           //接收者id xul
 	toUserId = "oo0epqhd"            //小战
 	message := "im  message content" //消息内容
 	objectName := "RCD:Command"      //消息类型（ "RC:TxtMsg"  文本消息； "RCD:Graphic" 图文消息）
 
-	var url = "http://127.0.0.1:8041/openapi/swap/statistics"
+	var url = "http://127.0.0.1:8042/openapi/swap/statistics"
 	var header = map[string]string{
 		"X-API-KEY": "ggowK0QRl1UPkPA9",
 	}

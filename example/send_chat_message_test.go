@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	dbx_chat "github.com/debox-pro/debox-chat-go-sdk"
+	dbx_chat "github.com/debox-pro/debox-chat-go-sdk/boxbotapi/deboxapi"
 )
 
 //该函数用来发文字消息，发群消息。

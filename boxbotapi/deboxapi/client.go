@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"sync"
 	"time"
+
+	boxbotapi "github.com/debox-pro/debox-chat-go-sdk/boxbotapi"
 )
 
 // GlobalForceUsingHTTP if GlobalForceUsingHTTP is true, then all request will use HTTP(ignore LogProject's UsingHTTP flag)
@@ -107,7 +109,7 @@ func (c *BotAPIBox) ResetAccessKeyToken(xApiKey string) {
 	c.accessKeyLock.Unlock()
 }
 
-func (bot *BotAPIBox) Send(c Chattable) (*Message, error) {
+func (bot *BotAPIBox) Send(c boxbotapi.Chattable) (*boxbotapi.Message, error) {
 	// type Body struct {
 	// 	ToUserId   string `json:"to_user_id"`
 	// 	GroupId    string `json:"group_id"`
@@ -129,8 +131,9 @@ func (bot *BotAPIBox) Send(c Chattable) (*Message, error) {
 	// if err != nil {
 	// 	return nil, err
 	// }
-	var message = c.(MarkdownV2Config)
-	body := message.mashal()
+	var message = c.(boxbotapi.MarkdownV2Config)
+	// body := message.mashal()
+	body, _ := json.Marshal(message)
 	h := map[string]string{
 		"x-chat-bodyrawsize": fmt.Sprintf("%d", len(body)),
 		"Content-Type":       "application/json",

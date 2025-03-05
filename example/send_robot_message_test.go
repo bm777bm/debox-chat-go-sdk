@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	dbx_chat "github.com/debox-pro/debox-chat-go-sdk"
+	dbx_chat "github.com/debox-pro/debox-chat-go-sdk/boxbotapi/deboxapi"
 	"github.com/debox-pro/debox-chat-go-sdk/model"
 )
 

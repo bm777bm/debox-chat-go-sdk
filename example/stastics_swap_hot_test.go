@@ -7,7 +7,7 @@ import (
 	"strings"
 	"testing"
 
-	boxbotapi "github.com/debox-pro/debox-chat-go-sdk"
+	dbx_chat "github.com/debox-pro/debox-chat-go-sdk/boxbotapi/deboxapi"
 
 	"github.com/debox-pro/debox-chat-go-sdk/common"
 	"github.com/debox-pro/debox-chat-go-sdk/model"
@@ -26,15 +26,14 @@ import (
 // href :="" 文字消息，此参数传空即可
 
 func TestSendRobotSwapMsgHot(t *testing.T) {
-	// sendSwapHot1()
-	sendSwapHot()
+	// sendSwapHot()
 }
 
 func sendSwapHot1() error {
 
 	xApiKey := "t2XJiou2Mu6AlEF6" //配置齐全,正式
 	// xApiKeyTest := "ggowK0QRl1UPkPA9" //测试
-	client := boxbotapi.CreateNormalInterface("https://open.debox.pro", xApiKey)
+	client := dbx_chat.CreateNormalInterface("https://open.debox.pro", xApiKey)
 	//7d6089qb
 	groupId := "fxi3hqo5" //test
 	groupId = "l3ixp32y"  //test1
@@ -47,7 +46,7 @@ func sendSwapHot1() error {
 	content := "im content"     //无用
 	objectName := "RCD:Graphic" //消息类型（ "RC:TxtMsg"  文本消息； "RCD:Graphic" 图文消息）
 
-	url := "http://127.0.0.1:8041/openapi/swap/hot?chain_id=1"
+	url := "http://127.0.0.1:8042/openapi/swap/hot?chain_id=1"
 	// url := "https://open.debox.pro/openapi/swap/hot?chain_id=1"
 	var from_address = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
 

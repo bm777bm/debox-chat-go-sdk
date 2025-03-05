@@ -41,3 +41,26 @@ type mockErrorRetry struct {
 func (e mockErrorRetry) Error() string {
 	return e.Err.String()
 }
+
+// Error is an error containing extra information returned by the Telegram API.
+type Error struct {
+	Code    int    `json:"errorCode"`
+	Message string `json:"errorMessage"`
+	// ResponseParameters
+	HTTPCode int32 `json:"httpCode"`
+	// Code      string `json:"errorCode"`
+	// Message   string `json:"errorMessage"`
+	RequestID string `json:"requestID"`
+}
+
+func (e Error) String() string {
+	b, err := json.MarshalIndent(e, "", "    ")
+	if err != nil {
+		return ""
+	}
+	return string(b)
+}
+
+func (e Error) Error() string {
+	return e.Message
+}

@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	// boxbotapi "github.com/debox-pro/debox-chat-go-sdk"
 	boxbotapi "github.com/debox-pro/debox-chat-go-sdk/boxbotapi"
+	dbx_chat "github.com/debox-pro/debox-chat-go-sdk/boxbotapi/deboxapi"
 )
 
 //该函数用来发图片消息，发群消息。
@@ -116,9 +116,9 @@ func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 	xApiKey = "ggowK0QRl1UPkPA9" //测试chatbot ,370
 	// xApiKey = "ggowK0QRl1UPkPA9" //测试 ,用户的
 
-	client := boxbotapi.CreateNormalInterface("https://open.debox.pro", xApiKey)
+	client := dbx_chat.CreateNormalInterface("https://open.debox.pro", xApiKey)
 	// client = boxbotapi.CreateNormalInterface("http://t.open.debox.pro", xApiKey)
-	client = boxbotapi.CreateNormalInterface("http://127.0.0.1:8041", xApiKey)
+	client = dbx_chat.CreateNormalInterface("http://127.0.0.1:8042", xApiKey)
 
 	//https://s.debox.pro/group?id=ii0jiad9
 	//https://s.debox.pro/group?id=ii0jiad9
@@ -203,9 +203,9 @@ func TestSendRobotGroupMarkdownMsg(t *testing.T) {
 	xApiKey = "ggowK0QRl1UPkPA9" //测试chatbot ,370
 	// xApiKey = "ggowK0QRl1UPkPA9" //测试 ,用户的
 
-	client := boxbotapi.CreateNormalInterface("https://open.debox.pro", xApiKey)
+	client := dbx_chat.CreateNormalInterface("https://open.debox.pro", xApiKey)
 	// client = boxbotapi.CreateNormalInterface("http://t.open.debox.pro", xApiKey)
-	client = boxbotapi.CreateNormalInterface("http://127.0.0.1:8041", xApiKey)
+	client = dbx_chat.CreateNormalInterface("http://127.0.0.1:8042", xApiKey)
 
 	// toUserId := "uvg2p6ho" //接收者id
 	var toUserId = "x1dei8zv1"

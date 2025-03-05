@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"testing"
 
-	boxbotapi "github.com/debox-pro/debox-chat-go-sdk"
+	dbx_chat "github.com/debox-pro/debox-chat-go-sdk/boxbotapi/deboxapi"
 
 	common "github.com/debox-pro/debox-chat-go-sdk/common"
 	"github.com/debox-pro/debox-chat-go-sdk/model"
@@ -29,7 +29,7 @@ func TestSendRobotSwapMsg(t *testing.T) {
 
 	xApiKey := "t2XJiou2Mu6AlEF6"     //配置齐全,正式
 	xApiKeyTest := "ggowK0QRl1UPkPA9" //测试
-	client := boxbotapi.CreateNormalInterface("https://open.debox.pro", xApiKey)
+	client := dbx_chat.CreateNormalInterface("https://open.debox.pro", xApiKey)
 	//7d6089qb
 	groupId := "fxi3hqo5" //test
 	groupId = "l3ixp32y"  //test1
@@ -42,7 +42,7 @@ func TestSendRobotSwapMsg(t *testing.T) {
 	message := "6"
 	href := ""
 
-	url := "http://127.0.0.1:8041/openapi/swap/statistics"
+	url := "http://127.0.0.1:8042/openapi/swap/statistics"
 	var header = map[string]string{
 		"X-API-KEY": xApiKeyTest,
 	}
