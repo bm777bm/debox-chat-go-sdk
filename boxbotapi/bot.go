@@ -453,11 +453,9 @@ func (bot *BotAPI) GetUpdatesChan(config UpdateConfig) UpdatesChannel {
 				log.Println(err)
 				log.Println("Failed to get updates, retrying in 3 seconds...")
 				time.Sleep(time.Second * 3)
-				return
 
 				continue
 			}
-			return
 
 			for _, update := range updates {
 				if update.Id >= config.Offset {

@@ -3,8 +3,6 @@ package main
 import (
 	"bufio"
 	"context"
-	"encoding/json"
-	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -167,16 +165,6 @@ var (
 )
 
 func main() {
-	var str = `{"message":"success","ok":true,"result":[{"id":32,"message":"{\"message_id\":0,\"from\":{\"user_id\":\"xq9oo6pg\",\"name\":\"\",\"pic\":\"\",\"address\":\"\"},\"chat\":{\"id\":\"w8chtv0t\",\"type\":\"group\"},\"text\":\"111\"}"}],"success":true}`
-	str = `{"message":"success","ok":true,"result":[{\"update_id\":206657316,\n\"message\":{\"message_id\":149,\"from\":{\"id\":7241196573,\"is_bot\":false,\"first_name\":\"mynameisxuchinachinachinamynameisxuchinachinachina\",\"last_name\":\"peter\",\"username\":\"l777paul\",\"language_code\":\"zh-hans\"},\"chat\":{\"id\":7241196573,\"first_name\":\"mynameisxuchinachinachinamynameisxuchinachinachina\",\"last_name\":\"peter\",\"username\":\"l777paul\",\"type\":\"private\"},\"date\":1741233415,\"text\":\"111\"}}],"success":true}`
-	// str = `["message":'{"message_id":0,"from":{"user_id":"xq9oo6pg","name":"","pic":"","address":""},"chat":{"id":"w8chtv0t","type":"group"},"text":"111"}]`
-	str = `"[{\"id\":206657316,\n\"message\":{\"message_id\":149,\"from\":{\"id\":\"7241196573\",\"is_bot\":false,\"first_name\":\"mynameisxuchinachinachinamynameisxuchinachinachina\",\"last_name\":\"peter\",\"username\":\"l777paul\",\"language_code\":\"zh-hans\"},\"chat\":{\"id\":\"7241196573\",\"first_name\":\"mynameisxuchinachinachinamynameisxuchinachinachina\",\"last_name\":\"peter\",\"username\":\"l777paul\",\"type\":\"private\"},\"date\":1741233415,\"text\":\"111\"}}]"`
-	var updates1 []boxbotapi.Update
-	err1 := json.Unmarshal([]byte(str), &updates1)
-	if err1 != nil {
-		fmt.Println("GetUpdates error: ", err1)
-	}
-	return
 	var err error
 	//bm set proxy begin
 	// proxyURL, err := url.Parse("http://127.0.0.1:7890")

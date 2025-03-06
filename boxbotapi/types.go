@@ -378,18 +378,20 @@ type Message struct {
 	//
 	// optional
 	From *User `json:"from,omitempty"`
+
+	// Chat is the conversation the message belongs to
+	Chat *Chat `json:"chat"`
+
 	// SenderChat is the sender of the message, sent on behalf of a chat. The
 	// channel itself for channel messages. The supergroup itself for messages
 	// from anonymous group administrators. The linked channel for messages
 	// automatically forwarded to the discussion group
 	//
 	// optional
-	SenderChat *Chat `json:"chat,omitempty"`
+	SenderChat *Chat `json:"sender_chat,omitempty"`
 
 	// Date of the message was sent in Unix time
 	Date int `json:"date"`
-	// Chat is the conversation the message belongs to
-	Chat *Chat `json:"chat"`
 	// ForwardFrom for forwarded messages, sender of the original message;
 	//
 	// optional
