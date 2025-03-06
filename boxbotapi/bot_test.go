@@ -11,9 +11,9 @@ import (
 
 const (
 	TestToken               = "153667468:AAHlSHlMqSt1f_uFmVRJbm5gntu2HI4WW8I"
-	ChatID                  = 76918703
+	ChatID                  = "76918703"
 	Channel                 = "@tgbotapitest"
-	SupergroupChatID        = -1001120141283
+	SupergroupChatID        = "-1001120141283"
 	ReplyToMessageID        = 35
 	ExistingPhotoFileID     = "AgACAgIAAxkDAAEBFUZhIALQ9pZN4BUe8ZSzUU_2foSo1AACnrMxG0BucEhezsBWOgcikQEAAwIAA20AAyAE"
 	ExistingDocumentFileID  = "BQADAgADOQADjMcoCcioX1GrDvp3Ag"
@@ -681,7 +681,7 @@ func ExampleNewBotAPI() {
 
 	bot.Debug = true
 
-	log.Printf("Authorized on account %s", bot.Self.UserName)
+	log.Printf("Authorized on account %s", bot.Self.Name)
 
 	u := NewUpdate(0)
 	u.Timeout = 60
@@ -698,7 +698,7 @@ func ExampleNewBotAPI() {
 			continue
 		}
 
-		log.Printf("[%s] %s", update.Message.From.UserName, update.Message.Text)
+		log.Printf("[%s] %s", update.Message.From.Name, update.Message.Text)
 
 		msg := NewMessage(update.Message.Chat.ID, update.Message.Text)
 		msg.ReplyToMessageID = update.Message.MessageID
@@ -715,7 +715,7 @@ func ExampleNewWebhook() {
 
 	bot.Debug = true
 
-	log.Printf("Authorized on account %s", bot.Self.UserName)
+	log.Printf("Authorized on account %s", bot.Self.Name)
 
 	wh, err := NewWebhookWithCert("https://www.google.com:8443/"+bot.Token, FilePath("cert.pem"))
 
@@ -755,7 +755,7 @@ func ExampleWebhookHandler() {
 
 	bot.Debug = true
 
-	log.Printf("Authorized on account %s", bot.Self.UserName)
+	log.Printf("Authorized on account %s", bot.Self.Name)
 
 	wh, err := NewWebhookWithCert("https://www.google.com:8443/"+bot.Token, FilePath("cert.pem"))
 
@@ -793,7 +793,7 @@ func ExampleInlineConfig() {
 		panic(err)
 	}
 
-	log.Printf("Authorized on account %s", bot.Self.UserName)
+	log.Printf("Authorized on account %s", bot.Self.Name)
 
 	u := NewUpdate(0)
 	u.Timeout = 60

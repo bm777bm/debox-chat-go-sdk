@@ -7,7 +7,7 @@ import (
 // NewMessage creates a new Message.
 //
 // chatID is where to send it, text is the message text.
-func NewMessage(chatID int64, text string) MessageConfig {
+func NewMessage(chatID string, text string) MessageConfig {
 	return MessageConfig{
 		BaseChat: BaseChat{
 			ChatID:           chatID,
@@ -19,7 +19,7 @@ func NewMessage(chatID int64, text string) MessageConfig {
 }
 
 // NewDeleteMessage creates a request to delete a message.
-func NewDeleteMessage(chatID int64, messageID int) DeleteMessageConfig {
+func NewDeleteMessage(chatID string, messageID int) DeleteMessageConfig {
 	return DeleteMessageConfig{
 		ChatID:    chatID,
 		MessageID: messageID,
@@ -44,7 +44,7 @@ func NewMessageToChannel(username string, text string) MessageConfig {
 //
 // chatID is where to send it, fromChatID is the source chat,
 // and messageID is the ID of the original message.
-func NewForward(chatID int64, fromChatID int64, messageID int) ForwardConfig {
+func NewForward(chatID string, fromChatID string, messageID int) ForwardConfig {
 	return ForwardConfig{
 		BaseChat:   BaseChat{ChatID: chatID},
 		FromChatID: fromChatID,
@@ -56,7 +56,7 @@ func NewForward(chatID int64, fromChatID int64, messageID int) ForwardConfig {
 //
 // chatID is where to send it, fromChatID is the source chat,
 // and messageID is the ID of the original message.
-func NewCopyMessage(chatID int64, fromChatID int64, messageID int) CopyMessageConfig {
+func NewCopyMessage(chatID string, fromChatID string, messageID int) CopyMessageConfig {
 	return CopyMessageConfig{
 		BaseChat:   BaseChat{ChatID: chatID},
 		FromChatID: fromChatID,
@@ -70,7 +70,7 @@ func NewCopyMessage(chatID int64, fromChatID int64, messageID int) CopyMessageCo
 // FileReader, or FileBytes.
 //
 // Note that you must send animated GIFs as a document.
-func NewPhoto(chatID int64, file RequestFileData) PhotoConfig {
+func NewPhoto(chatID string, file RequestFileData) PhotoConfig {
 	return PhotoConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{ChatID: chatID},
@@ -94,7 +94,7 @@ func NewPhotoToChannel(username string, file RequestFileData) PhotoConfig {
 }
 
 // NewAudio creates a new sendAudio request.
-func NewAudio(chatID int64, file RequestFileData) AudioConfig {
+func NewAudio(chatID string, file RequestFileData) AudioConfig {
 	return AudioConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{ChatID: chatID},
@@ -104,7 +104,7 @@ func NewAudio(chatID int64, file RequestFileData) AudioConfig {
 }
 
 // NewDocument creates a new sendDocument request.
-func NewDocument(chatID int64, file RequestFileData) DocumentConfig {
+func NewDocument(chatID string, file RequestFileData) DocumentConfig {
 	return DocumentConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{ChatID: chatID},
@@ -114,7 +114,7 @@ func NewDocument(chatID int64, file RequestFileData) DocumentConfig {
 }
 
 // NewSticker creates a new sendSticker request.
-func NewSticker(chatID int64, file RequestFileData) StickerConfig {
+func NewSticker(chatID string, file RequestFileData) StickerConfig {
 	return StickerConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{ChatID: chatID},
@@ -124,7 +124,7 @@ func NewSticker(chatID int64, file RequestFileData) StickerConfig {
 }
 
 // NewVideo creates a new sendVideo request.
-func NewVideo(chatID int64, file RequestFileData) VideoConfig {
+func NewVideo(chatID string, file RequestFileData) VideoConfig {
 	return VideoConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{ChatID: chatID},
@@ -134,7 +134,7 @@ func NewVideo(chatID int64, file RequestFileData) VideoConfig {
 }
 
 // NewAnimation creates a new sendAnimation request.
-func NewAnimation(chatID int64, file RequestFileData) AnimationConfig {
+func NewAnimation(chatID string, file RequestFileData) AnimationConfig {
 	return AnimationConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{ChatID: chatID},
@@ -147,7 +147,7 @@ func NewAnimation(chatID int64, file RequestFileData) AnimationConfig {
 //
 // chatID is where to send it, file is a string path to the file,
 // FileReader, or FileBytes.
-func NewVideoNote(chatID int64, length int, file RequestFileData) VideoNoteConfig {
+func NewVideoNote(chatID string, length int, file RequestFileData) VideoNoteConfig {
 	return VideoNoteConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{ChatID: chatID},
@@ -158,7 +158,7 @@ func NewVideoNote(chatID int64, length int, file RequestFileData) VideoNoteConfi
 }
 
 // NewVoice creates a new sendVoice request.
-func NewVoice(chatID int64, file RequestFileData) VoiceConfig {
+func NewVoice(chatID string, file RequestFileData) VoiceConfig {
 	return VoiceConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{ChatID: chatID},
@@ -169,7 +169,7 @@ func NewVoice(chatID int64, file RequestFileData) VoiceConfig {
 
 // NewMediaGroup creates a new media group. Files should be an array of
 // two to ten InputMediaPhoto or InputMediaVideo.
-func NewMediaGroup(chatID int64, files []interface{}) MediaGroupConfig {
+func NewMediaGroup(chatID string, files []interface{}) MediaGroupConfig {
 	return MediaGroupConfig{
 		ChatID: chatID,
 		Media:  files,
@@ -227,7 +227,7 @@ func NewInputMediaDocument(media RequestFileData) InputMediaDocument {
 }
 
 // NewContact allows you to send a shared contact.
-func NewContact(chatID int64, phoneNumber, firstName string) ContactConfig {
+func NewContact(chatID string, phoneNumber, firstName string) ContactConfig {
 	return ContactConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,
@@ -240,7 +240,7 @@ func NewContact(chatID int64, phoneNumber, firstName string) ContactConfig {
 // NewLocation shares your location.
 //
 // chatID is where to send it, latitude and longitude are coordinates.
-func NewLocation(chatID int64, latitude float64, longitude float64) LocationConfig {
+func NewLocation(chatID string, latitude float64, longitude float64) LocationConfig {
 	return LocationConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,
@@ -251,7 +251,7 @@ func NewLocation(chatID int64, latitude float64, longitude float64) LocationConf
 }
 
 // NewVenue allows you to send a venue and its location.
-func NewVenue(chatID int64, title, address string, latitude, longitude float64) VenueConfig {
+func NewVenue(chatID string, title, address string, latitude, longitude float64) VenueConfig {
 	return VenueConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,
@@ -267,7 +267,7 @@ func NewVenue(chatID int64, title, address string, latitude, longitude float64) 
 // Actions last for 5 seconds, or until your next action.
 //
 // chatID is where to send it, action should be set via Chat constants.
-func NewChatAction(chatID int64, action string) ChatActionConfig {
+func NewChatAction(chatID string, action string) ChatActionConfig {
 	return ChatActionConfig{
 		BaseChat: BaseChat{ChatID: chatID},
 		Action:   action,
@@ -277,7 +277,7 @@ func NewChatAction(chatID int64, action string) ChatActionConfig {
 // NewUserProfilePhotos gets user profile photos.
 //
 // userID is the ID of the user you wish to get profile photos from.
-func NewUserProfilePhotos(userID int64) UserProfilePhotosConfig {
+func NewUserProfilePhotos(userID string) UserProfilePhotosConfig {
 	return UserProfilePhotosConfig{
 		UserID: userID,
 		Offset: 0,
@@ -557,7 +557,7 @@ func NewInlineQueryResultVenue(id, title, address string, latitude, longitude fl
 }
 
 // NewEditMessageText allows you to edit the text of a message.
-func NewEditMessageText(chatID int64, messageID int, text string) EditMessageTextConfig {
+func NewEditMessageText(chatID string, messageID int, text string) EditMessageTextConfig {
 	return EditMessageTextConfig{
 		BaseEdit: BaseEdit{
 			ChatID:    chatID,
@@ -568,7 +568,7 @@ func NewEditMessageText(chatID int64, messageID int, text string) EditMessageTex
 }
 
 // NewEditMessageTextAndMarkup allows you to edit the text and replymarkup of a message.
-func NewEditMessageTextAndMarkup(chatID int64, messageID int, text string, replyMarkup InlineKeyboardMarkup) EditMessageTextConfig {
+func NewEditMessageTextAndMarkup(chatID string, messageID int, text string, replyMarkup InlineKeyboardMarkup) EditMessageTextConfig {
 	return EditMessageTextConfig{
 		BaseEdit: BaseEdit{
 			ChatID:      chatID,
@@ -580,7 +580,7 @@ func NewEditMessageTextAndMarkup(chatID int64, messageID int, text string, reply
 }
 
 // NewEditMessageCaption allows you to edit the caption of a message.
-func NewEditMessageCaption(chatID int64, messageID int, caption string) EditMessageCaptionConfig {
+func NewEditMessageCaption(chatID string, messageID int, caption string) EditMessageCaptionConfig {
 	return EditMessageCaptionConfig{
 		BaseEdit: BaseEdit{
 			ChatID:    chatID,
@@ -592,7 +592,7 @@ func NewEditMessageCaption(chatID int64, messageID int, caption string) EditMess
 
 // NewEditMessageReplyMarkup allows you to edit the inline
 // keyboard markup.
-func NewEditMessageReplyMarkup(chatID int64, messageID int, replyMarkup InlineKeyboardMarkup) EditMessageReplyMarkupConfig {
+func NewEditMessageReplyMarkup(chatID string, messageID int, replyMarkup InlineKeyboardMarkup) EditMessageReplyMarkupConfig {
 	return EditMessageReplyMarkupConfig{
 		BaseEdit: BaseEdit{
 			ChatID:      chatID,
@@ -748,7 +748,7 @@ func NewCallbackWithAlert(id, text string) CallbackConfig {
 }
 
 // NewInvoice creates a new Invoice request to the user.
-func NewInvoice(chatID int64, title, description, payload, providerToken, startParameter, currency string, prices []LabeledPrice) InvoiceConfig {
+func NewInvoice(chatID string, title, description, payload, providerToken, startParameter, currency string, prices []LabeledPrice) InvoiceConfig {
 	return InvoiceConfig{
 		BaseChat:       BaseChat{ChatID: chatID},
 		Title:          title,
@@ -777,7 +777,7 @@ func NewChatDescription(chatID int64, description string) SetChatDescriptionConf
 }
 
 // NewChatPhoto allows you to update the photo for a chat.
-func NewChatPhoto(chatID int64, photo RequestFileData) SetChatPhotoConfig {
+func NewChatPhoto(chatID string, photo RequestFileData) SetChatPhotoConfig {
 	return SetChatPhotoConfig{
 		BaseFile: BaseFile{
 			BaseChat: BaseChat{
@@ -796,7 +796,7 @@ func NewDeleteChatPhoto(chatID int64) DeleteChatPhotoConfig {
 }
 
 // NewPoll allows you to create a new poll.
-func NewPoll(chatID int64, question string, options ...string) SendPollConfig {
+func NewPoll(chatID string, question string, options ...string) SendPollConfig {
 	return SendPollConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,
@@ -808,7 +808,7 @@ func NewPoll(chatID int64, question string, options ...string) SendPollConfig {
 }
 
 // NewStopPoll allows you to stop a poll.
-func NewStopPoll(chatID int64, messageID int) StopPollConfig {
+func NewStopPoll(chatID string, messageID int) StopPollConfig {
 	return StopPollConfig{
 		BaseEdit{
 			ChatID:    chatID,
@@ -818,7 +818,7 @@ func NewStopPoll(chatID int64, messageID int) StopPollConfig {
 }
 
 // NewDice allows you to send a random dice roll.
-func NewDice(chatID int64) DiceConfig {
+func NewDice(chatID string) DiceConfig {
 	return DiceConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,
@@ -829,7 +829,7 @@ func NewDice(chatID int64) DiceConfig {
 // NewDiceWithEmoji allows you to send a random roll of one of many types.
 //
 // Emoji may be 🎲 (1-6), 🎯 (1-6), or 🏀 (1-5).
-func NewDiceWithEmoji(chatID int64, emoji string) DiceConfig {
+func NewDiceWithEmoji(chatID string, emoji string) DiceConfig {
 	return DiceConfig{
 		BaseChat: BaseChat{
 			ChatID: chatID,

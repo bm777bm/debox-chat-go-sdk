@@ -303,7 +303,7 @@ func (bot *BotAPI) GetMe() (User, error) {
 //
 // It requires the Message.
 func (bot *BotAPI) IsMessageToMe(message Message) bool {
-	return strings.Contains(message.Text, "@"+bot.Self.UserName)
+	return strings.Contains(message.Text, "@"+bot.Self.Name)
 }
 
 func hasFilesNeedingUpload(files []RequestFile) bool {
@@ -415,7 +415,9 @@ func (bot *BotAPI) GetUpdates(config UpdateConfig) ([]Update, error) {
 
 	var updates []Update
 	err = json.Unmarshal(resp.Result, &updates)
-
+	if err != nil {
+		fmt.Println("GetUpdates error: ", err)
+	}
 	return updates, err
 }
 
@@ -451,13 +453,15 @@ func (bot *BotAPI) GetUpdatesChan(config UpdateConfig) UpdatesChannel {
 				log.Println(err)
 				log.Println("Failed to get updates, retrying in 3 seconds...")
 				time.Sleep(time.Second * 3)
+				return
 
 				continue
 			}
+			return
 
 			for _, update := range updates {
-				if update.UpdateID >= config.Offset {
-					config.Offset = update.UpdateID + 1
+				if update.Id >= config.Offset {
+					config.Offset = update.Id + 1
 					ch <- update
 				}
 			}

@@ -39,10 +39,10 @@ func TestAddNonZero(t *testing.T) {
 
 func TestAddNonZero64(t *testing.T) {
 	params := make(Params)
-	params.AddNonZero64("value", 1)
+	params.AddNonZero64("value", "1")
 	assertLen(t, params, 1)
 	assertEq(t, params["value"], "1")
-	params.AddNonZero64("test", 0)
+	params.AddNonZero64("test", "0")
 	assertLen(t, params, 1)
 	assertEq(t, params["test"], "")
 }

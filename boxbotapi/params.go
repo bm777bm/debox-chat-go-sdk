@@ -24,9 +24,9 @@ func (p Params) AddNonZero(key string, value int) {
 }
 
 // AddNonZero64 is the same as AddNonZero except uses an int64.
-func (p Params) AddNonZero64(key string, value int64) {
-	if value != 0 {
-		p[key] = strconv.FormatInt(value, 10)
+func (p Params) AddNonZero64(key string, value string) {
+	if value != "" {
+		p[key] = value
 	}
 }
 

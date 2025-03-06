@@ -44,7 +44,7 @@ func (e Error) String() string {
 
 // Update is an update response, from GetUpdates.
 type Update struct {
-	// UpdateID is the update's unique identifier.
+	// Id is the update's unique identifier.
 	// Update identifiers start from a certain positive number and increase
 	// sequentially.
 	// This ID becomes especially handy if you're using Webhooks,
@@ -52,7 +52,7 @@ type Update struct {
 	// the correct update sequence, should they get out of order.
 	// If there are no new updates for at least a week, then identifier
 	// of the next update will be chosen randomly instead of sequentially.
-	UpdateID int `json:"update_id"`
+	Id int `json:"id"`
 	// Message new incoming message of any kind — text, photo, sticker, etc.
 	//
 	// optional
@@ -188,8 +188,8 @@ func (ch UpdatesChannel) Clear() {
 
 // User represents a Telegram user or bot.
 type User struct {
-	// ID is a unique identifier for this user or bot
-	ID int64 `json:"id"`
+	// UserId is a unique identifier for this user or bot
+	UserId string `json:"user_id"`
 	// IsBot true, if this user is a bot
 	//
 	// optional
@@ -200,10 +200,12 @@ type User struct {
 	//
 	// optional
 	LastName string `json:"last_name,omitempty"`
-	// UserName user's or bot's username
+	// Name user's or bot's username
 	//
 	// optional
-	UserName string `json:"username,omitempty"`
+	Name    string `json:"name,omitempty"`
+	Address string `json:"address,omitempty"`
+	Pic     string `json:"pic,omitempty"`
 	// LanguageCode IETF language tag of the user's language
 	// more info: https://en.wikipedia.org/wiki/IETF_language_tag
 	//
@@ -234,8 +236,8 @@ func (u *User) String() string {
 	if u == nil {
 		return ""
 	}
-	if u.UserName != "" {
-		return u.UserName
+	if u.Name != "" {
+		return u.Name
 	}
 
 	name := u.FirstName
@@ -249,7 +251,7 @@ func (u *User) String() string {
 // Chat represents a chat.
 type Chat struct {
 	// ID is a unique identifier for this chat
-	ID int64 `json:"id"`
+	ID string `json:"id"`
 	// Type of chat, can be either “private”, “group”, “supergroup” or “channel”
 	Type string `json:"type"`
 	// Title for supergroups, channels and group chats
@@ -368,6 +370,10 @@ func (c Chat) ChatConfig() ChatConfig {
 type Message struct {
 	// MessageID is a unique message identifier inside this chat
 	MessageID int `json:"message_id"`
+	// Text is for text messages, the actual UTF-8 text of the message, 0-4096 characters;
+	//
+	// optional
+	Text string `json:"text,omitempty"`
 	// From is a sender, empty for messages sent to channels;
 	//
 	// optional
@@ -378,7 +384,8 @@ type Message struct {
 	// automatically forwarded to the discussion group
 	//
 	// optional
-	SenderChat *Chat `json:"sender_chat,omitempty"`
+	SenderChat *Chat `json:"chat,omitempty"`
+
 	// Date of the message was sent in Unix time
 	Date int `json:"date"`
 	// Chat is the conversation the message belongs to
@@ -442,10 +449,6 @@ type Message struct {
 	//
 	// optional
 	AuthorSignature string `json:"author_signature,omitempty"`
-	// Text is for text messages, the actual UTF-8 text of the message, 0-4096 characters;
-	//
-	// optional
-	Text string `json:"text,omitempty"`
 	// Entities are for text messages, special entities like usernames,
 	// URLs, bot commands, etc. that appear in the text;
 	//

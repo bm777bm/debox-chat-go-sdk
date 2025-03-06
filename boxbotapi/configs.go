@@ -268,7 +268,7 @@ func (CloseConfig) params() (Params, error) {
 
 // BaseChat is base type for all chat config types.
 type BaseChat struct {
-	ChatID                   int64 // required
+	ChatID                   string // required
 	ChannelUsername          string
 	ReplyToMessageID         int
 	ReplyMarkup              interface{}
@@ -301,7 +301,7 @@ func (file BaseFile) params() (Params, error) {
 
 // BaseEdit is base type of all chat edits.
 type BaseEdit struct {
-	ChatID          int64
+	ChatID          string
 	ChannelUsername string
 	MessageID       int
 	InlineMessageID string
@@ -353,7 +353,7 @@ func (config MessageConfig) method() string {
 // ForwardConfig contains information about a ForwardMessage request.
 type ForwardConfig struct {
 	BaseChat
-	FromChatID          int64 // required
+	FromChatID          string // required
 	FromChannelUsername string
 	MessageID           int // required
 }
@@ -377,7 +377,7 @@ func (config ForwardConfig) method() string {
 // CopyMessageConfig contains information about a copyMessage request.
 type CopyMessageConfig struct {
 	BaseChat
-	FromChatID          int64
+	FromChatID          string
 	FromChannelUsername string
 	MessageID           int
 	Caption             string
@@ -914,7 +914,7 @@ func (config GameConfig) method() string {
 
 // SetGameScoreConfig allows you to update the game score in a chat.
 type SetGameScoreConfig struct {
-	UserID             int64
+	UserID             string
 	Score              int
 	Force              bool
 	DisableEditMessage bool
@@ -947,7 +947,7 @@ func (config SetGameScoreConfig) method() string {
 
 // GetGameHighScoresConfig allows you to fetch the high scores for a game.
 type GetGameHighScoresConfig struct {
-	UserID          int64
+	UserID          string
 	ChatID          int64
 	ChannelUsername string
 	MessageID       int
@@ -1099,7 +1099,7 @@ func (StopPollConfig) method() string {
 // UserProfilePhotosConfig contains information about a
 // GetUserProfilePhotos request.
 type UserProfilePhotosConfig struct {
-	UserID int64
+	UserID string
 	Offset int
 	Limit  int
 }
@@ -1275,7 +1275,7 @@ type ChatMemberConfig struct {
 	ChatID             int64
 	SuperGroupUsername string
 	ChannelUsername    string
-	UserID             int64
+	UserID             string
 }
 
 // UnbanChatMemberConfig allows you to unban a user.
@@ -1314,7 +1314,7 @@ func (config BanChatMemberConfig) params() (Params, error) {
 
 	params.AddFirstValid("chat_id", config.ChatID, config.SuperGroupUsername)
 	params.AddNonZero64("user_id", config.UserID)
-	params.AddNonZero64("until_date", config.UntilDate)
+	params.AddNonZero64("until_date", strconv.FormatInt(config.UntilDate, 10))
 	params.AddBool("revoke_messages", config.RevokeMessages)
 
 	return params, nil
@@ -1343,7 +1343,7 @@ func (config RestrictChatMemberConfig) params() (Params, error) {
 	params.AddNonZero64("user_id", config.UserID)
 
 	err := params.AddInterface("permissions", config.Permissions)
-	params.AddNonZero64("until_date", config.UntilDate)
+	params.AddNonZero64("until_date", strconv.FormatInt(config.UntilDate, 10))
 
 	return params, err
 }
@@ -1418,7 +1418,7 @@ func (config SetChatAdministratorCustomTitle) params() (Params, error) {
 type BanChatSenderChatConfig struct {
 	ChatID          int64
 	ChannelUsername string
-	SenderChatID    int64
+	SenderChatID    string
 	UntilDate       int
 }
 
@@ -1442,7 +1442,7 @@ func (config BanChatSenderChatConfig) params() (Params, error) {
 type UnbanChatSenderChatConfig struct {
 	ChatID          int64
 	ChannelUsername string
-	SenderChatID    int64
+	SenderChatID    string
 }
 
 func (config UnbanChatSenderChatConfig) method() string {
@@ -1460,7 +1460,7 @@ func (config UnbanChatSenderChatConfig) params() (Params, error) {
 
 // ChatConfig contains information about getting information on a chat.
 type ChatConfig struct {
-	ChatID             int64
+	ChatID             string
 	SuperGroupUsername string
 }
 
@@ -1678,7 +1678,7 @@ func (config LeaveChatConfig) params() (Params, error) {
 type ChatConfigWithUser struct {
 	ChatID             int64
 	SuperGroupUsername string
-	UserID             int64
+	UserID             string
 }
 
 func (config ChatConfigWithUser) params() (Params, error) {
@@ -1810,7 +1810,7 @@ func (config PreCheckoutConfig) params() (Params, error) {
 // DeleteMessageConfig contains information of a message in a chat to delete.
 type DeleteMessageConfig struct {
 	ChannelUsername string
-	ChatID          int64
+	ChatID          string
 	MessageID       int
 }
 
@@ -1829,7 +1829,7 @@ func (config DeleteMessageConfig) params() (Params, error) {
 
 // PinChatMessageConfig contains information of a message in a chat to pin.
 type PinChatMessageConfig struct {
-	ChatID              int64
+	ChatID              string
 	ChannelUsername     string
 	MessageID           int
 	DisableNotification bool
@@ -1853,7 +1853,7 @@ func (config PinChatMessageConfig) params() (Params, error) {
 //
 // If MessageID is not specified, it will unpin the most recent pin.
 type UnpinChatMessageConfig struct {
-	ChatID          int64
+	ChatID          string
 	ChannelUsername string
 	MessageID       int
 }
@@ -1874,7 +1874,7 @@ func (config UnpinChatMessageConfig) params() (Params, error) {
 // UnpinAllChatMessagesConfig contains information of all messages to unpin in
 // a chat.
 type UnpinAllChatMessagesConfig struct {
-	ChatID          int64
+	ChatID          string
 	ChannelUsername string
 }
 
@@ -1985,7 +1985,7 @@ func (config GetStickerSetConfig) params() (Params, error) {
 
 // UploadStickerConfig allows you to upload a sticker for use in a set later.
 type UploadStickerConfig struct {
-	UserID     int64
+	UserID     string
 	PNGSticker RequestFileData
 }
 
@@ -2012,7 +2012,7 @@ func (config UploadStickerConfig) files() []RequestFile {
 //
 // You must set either PNGSticker or TGSSticker.
 type NewStickerSetConfig struct {
-	UserID        int64
+	UserID        string
 	Name          string
 	Title         string
 	PNGSticker    RequestFileData
@@ -2058,7 +2058,7 @@ func (config NewStickerSetConfig) files() []RequestFile {
 
 // AddStickerConfig allows you to add a sticker to a set.
 type AddStickerConfig struct {
-	UserID       int64
+	UserID       string
 	Name         string
 	PNGSticker   RequestFileData
 	TGSSticker   RequestFileData
@@ -2136,7 +2136,7 @@ func (config DeleteStickerConfig) params() (Params, error) {
 // SetStickerSetThumbConfig allows you to set the thumbnail for a sticker set.
 type SetStickerSetThumbConfig struct {
 	Name   string
-	UserID int64
+	UserID string
 	Thumb  RequestFileData
 }
 
@@ -2203,7 +2203,7 @@ func (config DeleteChatStickerSetConfig) params() (Params, error) {
 //
 // Media consist of InputMedia items (InputMediaPhoto, InputMediaVideo).
 type MediaGroupConfig struct {
-	ChatID          int64
+	ChatID          string
 	ChannelUsername string
 
 	Media               []interface{}

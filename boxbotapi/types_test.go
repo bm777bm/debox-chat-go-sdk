@@ -7,10 +7,10 @@ import (
 
 func TestUserStringWith(t *testing.T) {
 	user := User{
-		ID:           0,
+		UserId:       "dfdfd",
 		FirstName:    "Test",
 		LastName:     "Test",
-		UserName:     "",
+		Name:         "",
 		LanguageCode: "en",
 		IsBot:        false,
 	}
@@ -22,10 +22,10 @@ func TestUserStringWith(t *testing.T) {
 
 func TestUserStringWithUserName(t *testing.T) {
 	user := User{
-		ID:           0,
+		UserId:       "fdfd",
 		FirstName:    "Test",
 		LastName:     "Test",
-		UserName:     "@test",
+		Name:         "@test",
 		LanguageCode: "en",
 	}
 
@@ -158,7 +158,7 @@ func TestMessageEntityParseURLBad(t *testing.T) {
 }
 
 func TestChatIsPrivate(t *testing.T) {
-	chat := Chat{ID: 10, Type: "private"}
+	chat := Chat{ID: "fdfd", Type: "private"}
 
 	if !chat.IsPrivate() {
 		t.Fail()
@@ -166,7 +166,7 @@ func TestChatIsPrivate(t *testing.T) {
 }
 
 func TestChatIsGroup(t *testing.T) {
-	chat := Chat{ID: 10, Type: "group"}
+	chat := Chat{ID: "fdfd", Type: "group"}
 
 	if !chat.IsGroup() {
 		t.Fail()
@@ -174,7 +174,7 @@ func TestChatIsGroup(t *testing.T) {
 }
 
 func TestChatIsChannel(t *testing.T) {
-	chat := Chat{ID: 10, Type: "channel"}
+	chat := Chat{ID: "fdfd", Type: "channel"}
 
 	if !chat.IsChannel() {
 		t.Fail()
@@ -182,7 +182,7 @@ func TestChatIsChannel(t *testing.T) {
 }
 
 func TestChatIsSuperGroup(t *testing.T) {
-	chat := Chat{ID: 10, Type: "supergroup"}
+	chat := Chat{ID: "fdfd", Type: "supergroup"}
 
 	if !chat.IsSuperGroup() {
 		t.Fail()

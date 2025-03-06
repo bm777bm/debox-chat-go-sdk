@@ -3,6 +3,8 @@ package main
 import (
 	"bufio"
 	"context"
+	"encoding/json"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -165,6 +167,16 @@ var (
 )
 
 func main() {
+	var str = `{"message":"success","ok":true,"result":[{"id":32,"message":"{\"message_id\":0,\"from\":{\"user_id\":\"xq9oo6pg\",\"name\":\"\",\"pic\":\"\",\"address\":\"\"},\"chat\":{\"id\":\"w8chtv0t\",\"type\":\"group\"},\"text\":\"111\"}"}],"success":true}`
+	str = `{"message":"success","ok":true,"result":[{\"update_id\":206657316,\n\"message\":{\"message_id\":149,\"from\":{\"id\":7241196573,\"is_bot\":false,\"first_name\":\"mynameisxuchinachinachinamynameisxuchinachinachina\",\"last_name\":\"peter\",\"username\":\"l777paul\",\"language_code\":\"zh-hans\"},\"chat\":{\"id\":7241196573,\"first_name\":\"mynameisxuchinachinachinamynameisxuchinachinachina\",\"last_name\":\"peter\",\"username\":\"l777paul\",\"type\":\"private\"},\"date\":1741233415,\"text\":\"111\"}}],"success":true}`
+	// str = `["message":'{"message_id":0,"from":{"user_id":"xq9oo6pg","name":"","pic":"","address":""},"chat":{"id":"w8chtv0t","type":"group"},"text":"111"}]`
+	str = `"[{\"id\":206657316,\n\"message\":{\"message_id\":149,\"from\":{\"id\":\"7241196573\",\"is_bot\":false,\"first_name\":\"mynameisxuchinachinachinamynameisxuchinachinachina\",\"last_name\":\"peter\",\"username\":\"l777paul\",\"language_code\":\"zh-hans\"},\"chat\":{\"id\":\"7241196573\",\"first_name\":\"mynameisxuchinachinachinamynameisxuchinachinachina\",\"last_name\":\"peter\",\"username\":\"l777paul\",\"type\":\"private\"},\"date\":1741233415,\"text\":\"111\"}}]"`
+	var updates1 []boxbotapi.Update
+	err1 := json.Unmarshal([]byte(str), &updates1)
+	if err1 != nil {
+		fmt.Println("GetUpdates error: ", err1)
+	}
+	return
 	var err error
 	//bm set proxy begin
 	// proxyURL, err := url.Parse("http://127.0.0.1:7890")
@@ -189,7 +201,7 @@ func main() {
 	}
 
 	// Set this to true to log all interactions with telegram servers
-	bot.Debug = false
+	bot.Debug = true
 
 	u := boxbotapi.NewUpdate(0)
 	u.Timeout = 60
@@ -272,7 +284,7 @@ func handleMessage(message *boxbotapi.Message) {
 }
 
 // When we get a command, we react accordingly
-func handleCommand(chatId int64, command string) error {
+func handleCommand(chatId string, command string) error {
 	var err error
 
 	switch command {
@@ -319,7 +331,7 @@ func handleButton(query *boxbotapi.CallbackQuery) {
 	bot.Send(msg)
 }
 
-func sendMenu(chatId int64) error {
+func sendMenu(chatId string) error {
 	msg := boxbotapi.NewMessage(chatId, firstMenu)
 	msg.ParseMode = boxbotapi.ModeHTML
 	msg.ReplyMarkup = firstMenuMarkup
@@ -327,7 +339,7 @@ func sendMenu(chatId int64) error {
 	return err
 }
 
-func sendMenu2(chatId int64) error {
+func sendMenu2(chatId string) error {
 	msg := boxbotapi.NewMessage(chatId, firstMenu)
 	msg.ParseMode = boxbotapi.ModeHTML
 	// msg.ReplyMarkup = firstMenuMarkup
