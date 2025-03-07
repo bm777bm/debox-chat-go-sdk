@@ -17,7 +17,7 @@ const (
 	// FileEndpoint is the endpoint for downloading a file from Telegram.
 	// FileEndpoint = "https://api.telegram.org/file/bot%s/%s"
 
-	APIEndpoint = "http://127.0.0.1:8042/openapi/robot_msg/bot%s/%s"
+	APIEndpoint = "http://127.0.0.1:8042/openapi/bot%s/%s"
 	// FileEndpoint is the endpoint for downloading a file from Telegram.
 	FileEndpoint = "https://api.telegram.org/file/bot%s/%s"
 )
@@ -269,6 +269,7 @@ func (CloseConfig) params() (Params, error) {
 // BaseChat is base type for all chat config types.
 type BaseChat struct {
 	ChatID                   string // required
+	ChatType                 string // required
 	ChannelUsername          string
 	ReplyToMessageID         int
 	ReplyMarkup              interface{}
@@ -280,6 +281,7 @@ func (chat *BaseChat) params() (Params, error) {
 	params := make(Params)
 
 	params.AddFirstValid("chat_id", chat.ChatID, chat.ChannelUsername)
+	params.AddFirstValid("chat_type", chat.ChatType, chat.ChannelUsername)
 	params.AddNonZero("reply_to_message_id", chat.ReplyToMessageID)
 	params.AddBool("disable_notification", chat.DisableNotification)
 	params.AddBool("allow_sending_without_reply", chat.AllowSendingWithoutReply)

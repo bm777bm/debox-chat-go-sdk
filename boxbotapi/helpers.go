@@ -18,6 +18,18 @@ func NewMessage(chatID string, text string) MessageConfig {
 	}
 }
 
+func NewMessageResponse(message *Message) MessageConfig {
+	return MessageConfig{
+		BaseChat: BaseChat{
+			ChatID:           message.Chat.ID,
+			ChatType:         message.Chat.Type,
+			ReplyToMessageID: 0,
+		},
+		Text:                  message.Text,
+		DisableWebPagePreview: false,
+	}
+}
+
 // NewDeleteMessage creates a request to delete a message.
 func NewDeleteMessage(chatID string, messageID int) DeleteMessageConfig {
 	return DeleteMessageConfig{

@@ -85,7 +85,7 @@ var (
 	tutorialButton = "Tutorial"
 	tokenUrl       = "https://deswap.pro/?from_chain_id=-200&from_address=11111111111111111111111111111111&to_chain_id=-200&to_address=BpykKPT9DoPy2WoZspkd7MvUb9QAPtX86ojmrg48pump"
 	// Store bot screaming status
-	screaming = false
+	screaming = true
 	bot       *boxbotapi.BotAPI
 
 	// Keyboard layout for the first menu. One button, one row
@@ -250,15 +250,16 @@ func handleMessage(message *boxbotapi.Message) {
 	}
 
 	// Print to console
-	log.Printf("%s wrote %s", user.FirstName, text)
+	log.Printf("%s wrote %s", user.Name, text)
 
 	var err error
 	if strings.HasPrefix(text, "/") {
 		err = handleCommand(message.Chat.ID, text)
 	} else if screaming && len(text) > 0 {
-		msg := boxbotapi.NewMessage(message.Chat.ID, strings.ToUpper(text))
+		// msg := boxbotapi.NewMessage(message.Chat.ID, strings.ToUpper(text))
+		msg := boxbotapi.NewMessageResponse(message)
 		// To preserve markdown, we attach entities (bold, italic..)
-		msg.Entities = message.Entities
+		// msg.Entities = message.Entities
 		_, err = bot.Send(msg)
 	} else {
 		// This is equivalent to forwarding, without the sender's name
