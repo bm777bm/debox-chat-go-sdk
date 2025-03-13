@@ -279,90 +279,20 @@ func TestFileLink(t *testing.T) {
 
 // Ensure all configs are sendable
 var (
-	_ Chattable = AnimationConfig{}
-	_ Chattable = AudioConfig{}
-	_ Chattable = BanChatMemberConfig{}
-	_ Chattable = BanChatSenderChatConfig{}
-	_ Chattable = CallbackConfig{}
-	_ Chattable = ChatActionConfig{}
-	_ Chattable = ChatAdministratorsConfig{}
-	_ Chattable = ChatInfoConfig{}
-	_ Chattable = ChatInviteLinkConfig{}
 	_ Chattable = CloseConfig{}
-	_ Chattable = ContactConfig{}
 	_ Chattable = CopyMessageConfig{}
-	_ Chattable = CreateChatInviteLinkConfig{}
-	_ Chattable = DeleteChatPhotoConfig{}
-	_ Chattable = DeleteChatStickerSetConfig{}
-	_ Chattable = DeleteMessageConfig{}
-	_ Chattable = DeleteMyCommandsConfig{}
 	_ Chattable = DeleteWebhookConfig{}
-	_ Chattable = DocumentConfig{}
-	_ Chattable = EditChatInviteLinkConfig{}
-	_ Chattable = EditMessageCaptionConfig{}
-	_ Chattable = EditMessageLiveLocationConfig{}
-	_ Chattable = EditMessageMediaConfig{}
-	_ Chattable = EditMessageReplyMarkupConfig{}
-	_ Chattable = EditMessageTextConfig{}
-	_ Chattable = FileConfig{}
 	_ Chattable = ForwardConfig{}
-	_ Chattable = GameConfig{}
-	_ Chattable = GetChatMemberConfig{}
-	_ Chattable = GetGameHighScoresConfig{}
-	_ Chattable = InlineConfig{}
-	_ Chattable = InvoiceConfig{}
-	_ Chattable = KickChatMemberConfig{}
-	_ Chattable = LeaveChatConfig{}
-	_ Chattable = LocationConfig{}
 	_ Chattable = LogOutConfig{}
-	_ Chattable = MediaGroupConfig{}
 	_ Chattable = MessageConfig{}
 	_ Chattable = PhotoConfig{}
-	_ Chattable = PinChatMessageConfig{}
-	_ Chattable = PreCheckoutConfig{}
-	_ Chattable = PromoteChatMemberConfig{}
-	_ Chattable = RestrictChatMemberConfig{}
-	_ Chattable = RevokeChatInviteLinkConfig{}
-	_ Chattable = SendPollConfig{}
-	_ Chattable = SetChatDescriptionConfig{}
-	_ Chattable = SetChatPhotoConfig{}
-	_ Chattable = SetChatTitleConfig{}
-	_ Chattable = SetGameScoreConfig{}
-	_ Chattable = ShippingConfig{}
-	_ Chattable = StickerConfig{}
-	_ Chattable = StopMessageLiveLocationConfig{}
-	_ Chattable = StopPollConfig{}
-	_ Chattable = UnbanChatMemberConfig{}
-	_ Chattable = UnbanChatSenderChatConfig{}
-	_ Chattable = UnpinChatMessageConfig{}
-	_ Chattable = UpdateConfig{}
-	_ Chattable = UserProfilePhotosConfig{}
-	_ Chattable = VenueConfig{}
-	_ Chattable = VideoConfig{}
-	_ Chattable = VideoNoteConfig{}
-	_ Chattable = VoiceConfig{}
 	_ Chattable = WebhookConfig{}
 )
 
 // Ensure all Fileable types are correct.
 var (
 	_ Fileable = (*PhotoConfig)(nil)
-	_ Fileable = (*AudioConfig)(nil)
-	_ Fileable = (*DocumentConfig)(nil)
-	_ Fileable = (*StickerConfig)(nil)
-	_ Fileable = (*VideoConfig)(nil)
-	_ Fileable = (*AnimationConfig)(nil)
-	_ Fileable = (*VideoNoteConfig)(nil)
-	_ Fileable = (*VoiceConfig)(nil)
-	_ Fileable = (*SetChatPhotoConfig)(nil)
-	_ Fileable = (*EditMessageMediaConfig)(nil)
-	_ Fileable = (*SetChatPhotoConfig)(nil)
-	_ Fileable = (*UploadStickerConfig)(nil)
-	_ Fileable = (*NewStickerSetConfig)(nil)
-	_ Fileable = (*AddStickerConfig)(nil)
-	_ Fileable = (*MediaGroupConfig)(nil)
 	_ Fileable = (*WebhookConfig)(nil)
-	_ Fileable = (*SetStickerSetThumbConfig)(nil)
 )
 
 // Ensure all RequestFileData types are correct.

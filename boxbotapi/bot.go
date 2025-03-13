@@ -269,19 +269,6 @@ func (bot *BotAPI) UploadFiles(endpoint string, params Params, files []RequestFi
 	return &apiResp, nil
 }
 
-// GetFileDirectURL returns direct URL to file
-//
-// It requires the FileID.
-func (bot *BotAPI) GetFileDirectURL(fileID string) (string, error) {
-	file, err := bot.GetFile(FileConfig{fileID})
-
-	if err != nil {
-		return "", err
-	}
-
-	return file.Link(bot.Token), nil
-}
-
 // GetMe fetches the currently authenticated bot.
 //
 // This method is called upon creation to validate the token,
@@ -354,50 +341,6 @@ func (bot *BotAPI) Send(c Chattable) (Message, error) {
 	err = json.Unmarshal(resp.Result, &message)
 
 	return message, err
-}
-
-// SendMediaGroup sends a media group and returns the resulting messages.
-func (bot *BotAPI) SendMediaGroup(config MediaGroupConfig) ([]Message, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return nil, err
-	}
-
-	var messages []Message
-	err = json.Unmarshal(resp.Result, &messages)
-
-	return messages, err
-}
-
-// GetUserProfilePhotos gets a user's profile photos.
-//
-// It requires UserID.
-// Offset and Limit are optional.
-func (bot *BotAPI) GetUserProfilePhotos(config UserProfilePhotosConfig) (UserProfilePhotos, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return UserProfilePhotos{}, err
-	}
-
-	var profilePhotos UserProfilePhotos
-	err = json.Unmarshal(resp.Result, &profilePhotos)
-
-	return profilePhotos, err
-}
-
-// GetFile returns a File which can download a file from Telegram.
-//
-// Requires FileID.
-func (bot *BotAPI) GetFile(config FileConfig) (File, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return File{}, err
-	}
-
-	var file File
-	err = json.Unmarshal(resp.Result, &file)
-
-	return file, err
 }
 
 // GetUpdates fetches updates.
@@ -558,131 +501,6 @@ func WriteToHTTPResponse(w http.ResponseWriter, c Chattable) error {
 	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
 	_, err = w.Write([]byte(values.Encode()))
 	return err
-}
-
-// GetChat gets information about a chat.
-func (bot *BotAPI) GetChat(config ChatInfoConfig) (Chat, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return Chat{}, err
-	}
-
-	var chat Chat
-	err = json.Unmarshal(resp.Result, &chat)
-
-	return chat, err
-}
-
-// GetChatAdministrators gets a list of administrators in the chat.
-//
-// If none have been appointed, only the creator will be returned.
-// Bots are not shown, even if they are an administrator.
-func (bot *BotAPI) GetChatAdministrators(config ChatAdministratorsConfig) ([]ChatMember, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return []ChatMember{}, err
-	}
-
-	var members []ChatMember
-	err = json.Unmarshal(resp.Result, &members)
-
-	return members, err
-}
-
-// GetChatMembersCount gets the number of users in a chat.
-func (bot *BotAPI) GetChatMembersCount(config ChatMemberCountConfig) (int, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return -1, err
-	}
-
-	var count int
-	err = json.Unmarshal(resp.Result, &count)
-
-	return count, err
-}
-
-// GetChatMember gets a specific chat member.
-func (bot *BotAPI) GetChatMember(config GetChatMemberConfig) (ChatMember, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return ChatMember{}, err
-	}
-
-	var member ChatMember
-	err = json.Unmarshal(resp.Result, &member)
-
-	return member, err
-}
-
-// GetGameHighScores allows you to get the high scores for a game.
-func (bot *BotAPI) GetGameHighScores(config GetGameHighScoresConfig) ([]GameHighScore, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return []GameHighScore{}, err
-	}
-
-	var highScores []GameHighScore
-	err = json.Unmarshal(resp.Result, &highScores)
-
-	return highScores, err
-}
-
-// GetInviteLink get InviteLink for a chat
-func (bot *BotAPI) GetInviteLink(config ChatInviteLinkConfig) (string, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return "", err
-	}
-
-	var inviteLink string
-	err = json.Unmarshal(resp.Result, &inviteLink)
-
-	return inviteLink, err
-}
-
-// GetStickerSet returns a StickerSet.
-func (bot *BotAPI) GetStickerSet(config GetStickerSetConfig) (StickerSet, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return StickerSet{}, err
-	}
-
-	var stickers StickerSet
-	err = json.Unmarshal(resp.Result, &stickers)
-
-	return stickers, err
-}
-
-// StopPoll stops a poll and returns the result.
-func (bot *BotAPI) StopPoll(config StopPollConfig) (Poll, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return Poll{}, err
-	}
-
-	var poll Poll
-	err = json.Unmarshal(resp.Result, &poll)
-
-	return poll, err
-}
-
-// GetMyCommands gets the currently registered commands.
-func (bot *BotAPI) GetMyCommands() ([]BotCommand, error) {
-	return bot.GetMyCommandsWithConfig(GetMyCommandsConfig{})
-}
-
-// GetMyCommandsWithConfig gets the currently registered commands with a config.
-func (bot *BotAPI) GetMyCommandsWithConfig(config GetMyCommandsConfig) ([]BotCommand, error) {
-	resp, err := bot.Request(config)
-	if err != nil {
-		return nil, err
-	}
-
-	var commands []BotCommand
-	err = json.Unmarshal(resp.Result, &commands)
-
-	return commands, err
 }
 
 // CopyMessage copy messages of any kind. The method is analogous to the method

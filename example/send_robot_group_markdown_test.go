@@ -19,7 +19,6 @@ import (
 // objectName := "RCD:Graphic"
 // href :="https://debox.pro/"   图文消息，传入跳转链接
 
-
 func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 
 	xApiKey := "P55X0r5xfDpm5Yc5"
@@ -35,14 +34,14 @@ func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 	groupId := "fxi3hqo5" //群组id
 	groupId = "128907"    //test1 正式
 	groupId = "ii0jiad9"  //112club//Test777
-	groupId = "3lifa7j6"  //test New7
+	// groupId = "3lifa7j6"  //test New7
 	// groupId = "ayoe8lz6"       //test New7
 	// groupId = "nhu775tk"       //test New7
-	groupId = "ymor0jin" //test New7
+	// groupId = "ymor0jin" //import
 
 	contentHTML := `
 	<span style="color:red">span123</span>
-	<b>bold</b>, <strong>bold</strong>
+	<b>bold</b>,nobold <strong>bold</strong>
 	<i>italic</i>, <em>italic</em>
 	<u>underline</u>, <ins>underline</ins>
 	<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
@@ -72,11 +71,11 @@ func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 	contentNormal := "$box"
 	objectName := "MarkdownV2" //消息类型（ "RCD:Graphic"  文本消息； "RCD:Graphic" 图文消息）
 	// objectName = "richtext"    //消息类型（ "RCD:Graphic"  文本消息； "RCD:Graphic" 图文消息）
-	// objectName = "HTML" //消息类型（ "RCD:Graphic"  文本消息； "RCD:Graphic" 图文消息）
+	objectName = "HTML" //消息类型（ "RCD:Graphic"  文本消息； "RCD:Graphic" 图文消息）
 	content := contentMD
 	content = contentNormal
 	content = contentHTML
-	content = contentMD
+	// content = contentMD
 
 	thirdMenuMarkup.FontSize = "s"
 	thirdMenuMarkup.FontColor = "#0000ff"

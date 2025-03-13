@@ -361,10 +361,6 @@ func (c Chat) IsChannel() bool {
 	return c.Type == "channel"
 }
 
-// ChatConfig returns a ChatConfig struct for chat related methods.
-func (c Chat) ChatConfig() ChatConfig {
-	return ChatConfig{ChatID: c.ID}
-}
 
 // Message represents a message.
 type Message struct {

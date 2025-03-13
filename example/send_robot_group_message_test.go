@@ -56,12 +56,16 @@ func TestSendRobotGroupMsg(t *testing.T) {
 // href :="https://debox.pro/"   图文消息，传入跳转链接
 func TestSendRobotGroupImg(t *testing.T) {
 
-	xApiKey := "t2X..."
+	xApiKey := "P55X0r5xfDpm5Yc5"
+	xApiKey = "ggowK0QRl1UPkPA9" //测试chatbot ,370
+	// xApiKey = "ggowK0QRl1UPkPA9" //测试 ,用户的
 
 	client := dbx_chat.CreateNormalInterface("https://open.debox.pro", xApiKey)
+	// client = boxbotapi.CreateNormalInterface("http://t.open.debox.pro", xApiKey)
+	client = dbx_chat.CreateNormalInterface("http://127.0.0.1:8042", xApiKey)
 
 	var toUserId = "x1dei8zv"
-	groupId := "l3ixp32y" //群组id
+	groupId := "ymor0jin" //群组id
 	title := "im title"   //消息标题
 
 	objectName := "RCD:Graphic" //消息类型（ "RCD:Graphic"  文本消息； "RCD:Graphic" 图文消息）
