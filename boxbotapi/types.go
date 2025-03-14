@@ -773,14 +773,14 @@ type BotCommandScope struct {
 
 type UITagA struct {
 	Uitag string `json:"uitag"`
-	Text  string `json:"text omitempty"`
-	Href  string `json:"href omitempty"`
+	Text  string `json:"text,omitempty"`
+	Href  string `json:"href,omitempty"`
 }
 
 type UITagImg struct {
 	Uitag    string `json:"uitag"`              //img
-	Src      string `json:"src omitempty"`      //img src
-	Position string `json:"position omitempty"` // head foot
-	Height   string `json:"height omitempty"`   //img height，大于0生效，否则表示没设置将用默认值
-	Href     string `json:"href omitempty"`     // img href
+	Src      string `json:"src,omitempty"`      //img src
+	Position string `json:"position,omitempty"` // head foot
+	Height   string `json:"height,omitempty"`   //img height，大于0生效，否则表示没设置将用默认值
+	Href     string `json:"href,omitempty"`     // img href
 }

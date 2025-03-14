@@ -21,7 +21,7 @@ const (
 	ModeMarkdown   = "Markdown"
 	ModeMarkdownV2 = "MarkdownV2"
 	ModeHTML       = "HTML"
-	ModeRichText   = "richText"
+	ModeRichText   = "richtext"
 )
 
 // Constant values for update types
