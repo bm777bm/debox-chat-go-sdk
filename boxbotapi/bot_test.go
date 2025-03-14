@@ -178,7 +178,7 @@ func ExampleWebhookHandler() {
 		panic(err)
 	}
 	if info.LastErrorDate != 0 {
-		log.Printf("[Telegram callback failed]%s", info.LastErrorMessage)
+		log.Printf("[DeBox callback failed]%s", info.LastErrorMessage)
 	}
 
 	http.HandleFunc("/"+bot.Token, func(w http.ResponseWriter, r *http.Request) {

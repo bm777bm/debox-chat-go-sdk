@@ -7,7 +7,7 @@ This library is generally broken into three components you need to understand.
 Configs are collections of fields related to a single request. For example, if
 one wanted to use the `sendMessage` endpoint, you could use the `MessageConfig`
 struct to configure the request. There is a one-to-one relationship between
-Telegram endpoints and configs. They generally have the naming pattern of
+DeBox endpoints and configs. They generally have the naming pattern of
 removing the `send` prefix and they all end with the `Config` suffix. They
 generally implement the `Chattable` interface. If they can send files, they
 implement the `Fileable` interface.

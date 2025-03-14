@@ -7,16 +7,16 @@ import (
 	"os"
 )
 
-// Telegram constants
+// DeBox constants
 const (
 	// APIEndpoint is the endpoint for all API methods,
 	// with formatting for Sprintf.
 	// APIEndpoint = "https://api.telegram.org/bot%s/%s"
-	// FileEndpoint is the endpoint for downloading a file from Telegram.
+	// FileEndpoint is the endpoint for downloading a file from DeBox.
 	// FileEndpoint = "https://api.telegram.org/file/bot%s/%s"
 
 	APIEndpoint = "http://127.0.0.1:8042/openapi/bot%s/%s"
-	// FileEndpoint is the endpoint for downloading a file from Telegram.
+	// FileEndpoint is the endpoint for downloading a file from DeBox.
 	FileEndpoint = "https://api.telegram.org/file/bot%s/%s"
 )
 
@@ -207,7 +207,7 @@ func (fu FileURL) SendData() string {
 	return string(fu)
 }
 
-// FileID is an ID of a file already uploaded to Telegram.
+// FileID is an ID of a file already uploaded to DeBox.
 type FileID string
 
 func (fi FileID) NeedsUpload() bool {
@@ -320,8 +320,8 @@ func (edit BaseEdit) params() (Params, error) {
 // MessageConfig contains information about a SendMessage request.
 type MessageConfig struct {
 	BaseChat
-	Text                  string
-	ParseMode             string
+	Text      string
+	ParseMode string
 }
 
 func (config MessageConfig) params() (Params, error) {

@@ -9,7 +9,7 @@ import (
 	"time"
 )
 
-// APIResponse is a response from the Telegram API with the result
+// APIResponse is a response from the DeBox API with the result
 // stored raw.
 type APIResponse struct {
 	Ok          bool                `json:"ok"`
@@ -19,7 +19,7 @@ type APIResponse struct {
 	Parameters  *ResponseParameters `json:"parameters,omitempty"`
 }
 
-// Error is an error containing extra information returned by the Telegram API.
+// Error is an error containing extra information returned by the DeBox API.
 type Error struct {
 	Code    int    `json:"errorCode"`
 	Message string `json:"errorMessage"`
@@ -127,7 +127,7 @@ type Update struct {
 	ChatJoinRequest *ChatJoinRequest `json:"chat_join_request"`
 }
 
-// SentFrom returns the user who sent an update. Can be nil, if Telegram did not provide information
+// SentFrom returns the user who sent an update. Can be nil, if DeBox did not provide information
 // about the user in the update object.
 func (u *Update) SentFrom() *User {
 	switch {
@@ -186,7 +186,7 @@ func (ch UpdatesChannel) Clear() {
 	}
 }
 
-// User represents a Telegram user or bot.
+// User represents a DeBox user or bot.
 type User struct {
 	// UserId is a unique identifier for this user or bot
 	UserId string `json:"user_id"`
@@ -278,7 +278,7 @@ type Chat struct {
 	// optional
 	Bio string `json:"bio,omitempty"`
 	// HasPrivateForwards is true if privacy settings of the other party in the
-	// private chat allows to use tg://user?id=<user_id> links only in chats
+	// private chat allows to use box://user?id=<user_id> links only in chats
 	// with the user. Returned only in getChat.
 	//
 	// optional
@@ -360,7 +360,6 @@ func (c Chat) IsSuperGroup() bool {
 func (c Chat) IsChannel() bool {
 	return c.Type == "channel"
 }
-
 
 // Message represents a message.
 type Message struct {
@@ -602,7 +601,7 @@ type Message struct {
 	//
 	// optional
 	ConnectedWebsite string `json:"connected_website,omitempty"`
-	// PassportData is a Telegram Passport data;
+	// PassportData is a DeBox Passport data;
 	//
 	// optional
 	PassportData *PassportData `json:"passport_data,omitempty"`
@@ -858,7 +857,7 @@ type Animation struct {
 	FileSize int `json:"file_size,omitempty"`
 }
 
-// Audio represents an audio file to be treated as music by the Telegram clients.
+// Audio represents an audio file to be treated as music by the DeBox clients.
 type Audio struct {
 	// FileID is an identifier for this file, which can be used to download or
 	// reuse the file
@@ -1009,7 +1008,7 @@ type Contact struct {
 	//
 	// optional
 	LastName string `json:"last_name,omitempty"`
-	// UserID contact's user identifier in Telegram
+	// UserID contact's user identifier in DeBox
 	//
 	// optional
 	UserID int64 `json:"user_id,omitempty"`
@@ -1205,7 +1204,7 @@ type UserProfilePhotos struct {
 	Photos [][]PhotoSize `json:"photos"`
 }
 
-// File contains information about a file to download from Telegram.
+// File contains information about a file to download from DeBox.
 type File struct {
 	// FileID identifier for this file, which can be used to download or reuse
 	// the file
@@ -1304,7 +1303,7 @@ type KeyboardButtonPollType struct {
 	Type string `json:"type"`
 }
 
-// ReplyKeyboardRemove Upon receiving a message with this object, Telegram
+// ReplyKeyboardRemove Upon receiving a message with this object, DeBox
 // clients will remove the current custom keyboard and display the default
 // letter-keyboard. By default, custom keyboards are displayed until a new
 // keyboard is sent by a bot. An exception is made for one-time keyboards
@@ -1348,14 +1347,14 @@ type InlineKeyboardMarkup struct {
 type InlineKeyboardButton struct {
 	// Text label text on the button
 	Text string `json:"text"`
-	// URL HTTP or tg:// url to be opened when button is pressed.
+	// URL HTTP or box:// url to be opened when button is pressed.
 	//
 	// optional
 	URL          *string `json:"url,omitempty"`
 	SubText      string  `json:"sub_text"`
 	SubTextColor string  `json:"sub_text_color"`
 	// LoginURL is an HTTP URL used to automatically authorize the user. Can be
-	//	// used as a replacement for the Telegram Login Widget
+	//	// used as a replacement for the DeBox Login Widget
 
 	// optional
 	LoginURL *LoginURL `json:"login_url,omitempty"`
@@ -1398,7 +1397,7 @@ type InlineKeyboardButton struct {
 
 // LoginURL represents a parameter of the inline keyboard button used to
 // automatically authorize a user. Serves as a great replacement for the
-// Telegram Login Widget when the user is coming from Telegram. All the user
+// DeBox Login Widget when the user is coming from DeBox. All the user
 // needs to do is tap/click a button and confirm that they want to log in.
 type LoginURL struct {
 	// URL is an HTTP URL to be opened with user authorization data added to the
@@ -1467,7 +1466,7 @@ type CallbackQuery struct {
 	GameShortName string `json:"game_short_name,omitempty"`
 }
 
-// ForceReply when receiving a message with this object, Telegram clients will
+// ForceReply when receiving a message with this object, DeBox clients will
 // display a reply interface to the user (act as if the user has selected the
 // bot's message and tapped 'Reply'). This can be extremely useful if you  want
 // to create user-friendly step-by-step interfaces without having to sacrifice
@@ -1809,8 +1808,8 @@ type BaseInputMedia struct {
 	// Type of the result.
 	Type string `json:"type"`
 	// Media file to send. Pass a file_id to send a file
-	// that exists on the Telegram servers (recommended),
-	// pass an HTTP URL for Telegram to get a file from the Internet,
+	// that exists on the DeBox servers (recommended),
+	// pass an HTTP URL for DeBox to get a file from the Internet,
 	// or pass “attach://<file_attach_name>” to upload a new one
 	// using multipart/form-data under <file_attach_name> name.
 	Media RequestFileData `json:"media"`
@@ -2076,7 +2075,7 @@ func (info WebhookInfo) IsSet() bool {
 	return info.URL != ""
 }
 
-// InlineQuery is a Query from Telegram for an inline request.
+// InlineQuery is a Query from DeBox for an inline request.
 type InlineQuery struct {
 	// ID unique identifier for this query
 	ID string `json:"id"`

@@ -42,7 +42,7 @@ func (e mockErrorRetry) Error() string {
 	return e.Err.String()
 }
 
-// Error is an error containing extra information returned by the Telegram API.
+// Error is an error containing extra information returned by the DeBox API.
 type Error struct {
 	Code    int    `json:"errorCode"`
 	Message string `json:"errorMessage"`

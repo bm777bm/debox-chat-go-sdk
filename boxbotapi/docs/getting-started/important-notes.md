@@ -1,6 +1,6 @@
 # Important Notes
 
-The Telegram Bot API has a few potentially unanticipated behaviors. Here are a
+The DeBox Bot API has a few potentially unanticipated behaviors. Here are a
 few of them. If any behavior was surprising to you, please feel free to open a
 pull request!
 
@@ -19,7 +19,7 @@ pull request!
 ## Entities use UTF16
 
 - When extracting text entities using offsets and lengths, characters can appear
-  to be in incorrect positions. This is because Telegram uses UTF16 lengths
+  to be in incorrect positions. This is because DeBox uses UTF16 lengths
   while Golang uses UTF8. It's possible to convert between the two, see
   [issue #231][issue-231] for more details.
 
@@ -44,7 +44,7 @@ pull request!
 - By default, bots only get updates directly addressed to them. If you need to
   get all messages, you must disable privacy mode with Botfather. Bots already
   added to groups will need to be removed and readded for the changes to take
-  effect. You can read more on the [Telegram Bot API docs][api-docs].
+  effect. You can read more on the [DeBox Bot API docs][api-docs].
 
 [api-docs]: https://core.telegram.org/bots/faq#what-messages-will-my-bot-get
 

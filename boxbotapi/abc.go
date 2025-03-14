@@ -1,5 +1,0 @@
-package boxbotapi
-
-func Add() {
-
-}

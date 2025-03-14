@@ -43,7 +43,7 @@ func (config DocumentConfig) files() []RequestFile {
 }
 ```
 
-Telegram also supports the `attach://` syntax (discussed more later) for
+DeBox also supports the `attach://` syntax (discussed more later) for
 thumbnails, but there's no reason to make things more complicated.
 
 ### Dynamic Fields
@@ -51,7 +51,7 @@ thumbnails, but there's no reason to make things more complicated.
 Of course, not everything can be so simple. Methods like `sendMediaGroup`
 can accept many files, and each file can have custom markup. Using a static
 field isn't possible because we need to specify which field is attached to each
-item. Telegram introduced the `attach://` syntax for this.
+item. DeBox introduced the `attach://` syntax for this.
 
 Let's follow through creating a new media group with string and file uploads.
 

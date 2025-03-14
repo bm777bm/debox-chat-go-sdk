@@ -1,6 +1,6 @@
 # Adding Endpoints
 
-This is mostly useful if you've managed to catch a new Telegram Bot API update
+This is mostly useful if you've managed to catch a new DeBox Bot API update
 before the library can get updated. It's also a great source of information
 about how the types work internally.
 
@@ -19,7 +19,7 @@ type DeleteMessageConfig struct {
 }
 ```
 
-What type should `ChatID` be? Telegram allows specifying numeric chat IDs or
+What type should `ChatID` be? DeBox allows specifying numeric chat IDs or
 channel usernames. Golang doesn't have union types, and interfaces are entirely
 untyped. This library solves this by adding two fields, a `ChatID` and a
 `ChannelUsername`. We can now write the struct as follows.
@@ -32,7 +32,7 @@ type DeleteMessageConfig struct {
 }
 ```
 
-Note that `ChatID` is an `int64`. Telegram chat IDs can be greater than 32 bits.
+Note that `ChatID` is an `int64`. DeBox chat IDs can be greater than 32 bits.
 
 Okay, we now have our struct. But we can't send it yet. It doesn't implement
 `Chattable` so it won't work with `Request` or `Send`.
@@ -60,7 +60,7 @@ func (config DeleteMessageConfig) method() string {
 ```
 
 Now we have to add the `params`. The `Params` type is an alias for
-`map[string]string`. Telegram expects only a single field for `chat_id`, so we
+`map[string]string`. DeBox expects only a single field for `chat_id`, so we
 have to determine what data to send.
 
 We could use an if statement to determine which field to get the value from.
@@ -179,7 +179,7 @@ After we've got a Config type, we'll want to make it more user-friendly. We can
 do this by adding a new helper to `helpers.go`. These are functions that take
 in the required data for the request to succeed and populate a Config.
 
-Telegram only requires two fields to call `deleteMessage`, so this will be fast.
+DeBox only requires two fields to call `deleteMessage`, so this will be fast.
 
 ```go
 func NewDeleteMessage(chatID int64, messageID int) DeleteMessageConfig {

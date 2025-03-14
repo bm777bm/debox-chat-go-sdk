@@ -45,12 +45,12 @@ func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 	<i>italic</i>, <em>italic</em>
 	<u>underline</u>, <ins>underline</ins>
 	<s>strikethrough</s>, <strike>strikethrough</strike>, <del>strikethrough</del>
-	<span class="tg-spoiler">spoiler</span>, <tg-spoiler>spoiler</tg-spoiler>
-	<b>bold <i>italic bold <s>italic bold strikethrough <span class="tg-spoiler">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>
+	<span class="box-spoiler">spoiler</span>, <box-spoiler>spoiler</box-spoiler>
+	<b>bold <i>italic bold <s>italic bold strikethrough <span class="box-spoiler">italic bold strikethrough spoiler</span></s> <u>underline italic bold</u></i> bold</b>
 	<a href="http://www.example.com/">inline URL</a>
-	<a href="tg://user?id=123456789">inline mention of a user</a>
+	<a href="box://user?id=123456789">inline mention of a user</a>
 	<a href="https://debox.pro">debox</a>
-	<tg-emoji emoji-id="5368324170671202286"></tg-emoji>
+	<box-emoji emoji-id="5368324170671202286"></box-emoji>
 	<code>inline fixed-width code</code>
 	<pre>pre-formatted fixed-width code block</pre>
 	<pre><code class="language-python">pre-formatted fixed-width code block written in the Python programming language</code></pre>
@@ -77,8 +77,8 @@ func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 	content = contentHTML
 	// content = contentMD
 
-	thirdMenuMarkup.FontSize = "s"
-	thirdMenuMarkup.FontColor = "#0000ff"
+	secondMenuMarkup.FontSize = "s"
+	secondMenuMarkup.FontColor = "#0000ff"
 
 	firstMenuMarkup.FontSize = "s"
 	firstMenuMarkup.FontColor = "#ff0000"
@@ -88,7 +88,7 @@ func TestSendRobotGroupMarkdownMsg1(t *testing.T) {
 		Content:          content,
 		ObjectName:       objectName,
 		UserActionMarkup: &firstMenuMarkup,
-		ReplyMarkup:      &thirdMenuMarkup,
+		ReplyMarkup:      &secondMenuMarkup,
 	}
 	_, err := client.Send(message)
 	if err != nil {

@@ -12,18 +12,15 @@ import (
 
 var (
 	// Menu texts
-	firstMenu  = "<b>Menu 1</b><br/>A box button message."
-	secondMenu = "<b>Menu 2</b><br/>A box button message."
+	firstMenu = "<b>Menu 1</b><br/>A box button message."
 
 	// Button texts
 	nextButton     = "Next"
-	nextButton1    = "Next1"
 	backButton     = "Back"
 	tutorialButton = "Tutorial"
 	tokenUrl       = "https://deswap.pro/?from_chain_id=-200&from_address=11111111111111111111111111111111&to_chain_id=-200&to_address=BpykKPT9DoPy2WoZspkd7MvUb9QAPtX86ojmrg48pump"
 	// Store bot screaming status
-	screaming = true
-	bot       *boxbotapi.BotAPI
+	bot *boxbotapi.BotAPI
 
 	// Keyboard layout for the first menu. One button, one row
 
@@ -32,22 +29,13 @@ var (
 			boxbotapi.NewInlineKeyboardButtonURL("url1", tokenUrl),
 		),
 		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
-			boxbotapi.NewInlineKeyboardButtonData(nextButton1, nextButton1),
+			boxbotapi.NewInlineKeyboardButtonData(nextButton, nextButton),
+			boxbotapi.NewInlineKeyboardButtonData(backButton, backButton),
 		),
 	)
 
 	// Keyboard layout for the second menu. Two buttons, one per row
 	secondMenuMarkup = boxbotapi.NewInlineKeyboardMarkup(
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(backButton, backButton),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonURL(tutorialButton, "https://core.telegram.org/bots/api"),
-		),
-	)
-
-	thirdMenuMarkup = boxbotapi.NewInlineKeyboardMarkup(
 		boxbotapi.NewInlineKeyboardRow(
 			boxbotapi.NewInlineKeyboardButtonURL(tutorialButton, tokenUrl),
 		),
@@ -134,11 +122,8 @@ func handleMessage(message *boxbotapi.Message) {
 	var err error
 	if strings.HasPrefix(text, "/") {
 		err = handleCommand(message.Chat.ID, message.Chat.Type, text)
-	} else if screaming && len(text) > 0 {
-		// msg := boxbotapi.NewMessage(message.Chat.ID, strings.ToUpper(text))
+	} else if len(text) > 0 {
 		msg := boxbotapi.NewMessageResponse(message)
-		// To preserve markdown, we attach entities (bold, italic..)
-		// msg.Entities = message.Entities
 		_, err = bot.Send(msg)
 	}
 
@@ -152,14 +137,6 @@ func handleCommand(chatId, chatType string, command string) error {
 	var err error
 
 	switch command {
-	case "/scream":
-		screaming = true
-		break
-
-	case "/whisper":
-		screaming = false
-		break
-
 	case "/menu":
 		err = sendMenu(chatId, chatType)
 		break
@@ -174,26 +151,6 @@ func handleCommand(chatId, chatType string, command string) error {
 
 func handleButton(query *boxbotapi.CallbackQuery) {
 	//暂时不支持消息编辑
-	// var text string
-
-	// markup := boxbotapi.NewInlineKeyboardMarkup()
-	// message := query.Message
-
-	// if query.Data == nextButton {
-	// 	text = secondMenu
-	// 	markup = secondMenuMarkup
-	// } else if query.Data == backButton {
-	// 	text = firstMenu
-	// 	markup = firstMenuMarkup
-	// }
-
-	// callbackCfg := boxbotapi.NewCallback(query.ID, "")
-	// bot.Send(callbackCfg)
-
-	// // Replace menu text and keyboard
-	// msg := boxbotapi.NewEditMessageTextAndMarkup(message.Chat.ID, message.MessageID, text, markup)
-	// msg.ParseMode = boxbotapi.ModeHTML
-	// bot.Send(msg)
 }
 
 func sendMenu(chatId, chatType string) error {
@@ -207,8 +164,7 @@ func sendMenu(chatId, chatType string) error {
 func sendMenu2(chatId, chatType string) error {
 	msg := boxbotapi.NewMessage(chatId, chatType, firstMenu)
 	msg.ParseMode = boxbotapi.ModeHTML
-	// msg.ReplyMarkup = firstMenuMarkup
-	msg.ReplyMarkup = thirdMenuMarkup
+	msg.ReplyMarkup = secondMenuMarkup
 	_, err := bot.Send(msg)
 	return err
 }

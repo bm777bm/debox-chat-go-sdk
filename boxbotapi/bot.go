@@ -1,5 +1,5 @@
 // package deboxapi has functions and types used for interacting with
-// the Telegram Bot API.
+// the DeBox Bot API.
 package boxbotapi
 
 import (
@@ -21,7 +21,7 @@ type HTTPClient interface {
 	Do(req *http.Request) (*http.Response, error)
 }
 
-// BotAPI allows you to interact with the Telegram Bot API.
+// BotAPI allows you to interact with the DeBox Bot API.
 type BotAPI struct {
 	Token  string `json:"token"`
 	Debug  bool   `json:"debug"`
@@ -36,7 +36,7 @@ type BotAPI struct {
 
 // NewBotAPI creates a new BotAPI instance.
 //
-// It requires a token, provided by @BotFather on Telegram.
+// It requires a token, provided by @BotFather on DeBox.
 func NewBotAPI(token string) (*BotAPI, error) {
 	return NewBotAPIWithClient(token, APIEndpoint, &http.Client{})
 }
@@ -44,7 +44,7 @@ func NewBotAPI(token string) (*BotAPI, error) {
 // NewBotAPIWithAPIEndpoint creates a new BotAPI instance
 // and allows you to pass API endpoint.
 //
-// It requires a token, provided by @BotFather on Telegram and API endpoint.
+// It requires a token, provided by @BotFather on DeBox and API endpoint.
 func NewBotAPIWithAPIEndpoint(token, apiEndpoint string) (*BotAPI, error) {
 	return NewBotAPIWithClient(token, apiEndpoint, &http.Client{})
 }
@@ -52,7 +52,7 @@ func NewBotAPIWithAPIEndpoint(token, apiEndpoint string) (*BotAPI, error) {
 // NewBotAPIWithClient creates a new BotAPI instance
 // and allows you to pass a http.Client.
 //
-// It requires a token, provided by @BotFather on Telegram and API endpoint.
+// It requires a token, provided by @BotFather on DeBox and API endpoint.
 func NewBotAPIWithClient(token, apiEndpoint string, client HTTPClient) (*BotAPI, error) {
 	//bmadd begin
 	if client == nil {
@@ -78,7 +78,7 @@ func NewBotAPIWithClient(token, apiEndpoint string, client HTTPClient) (*BotAPI,
 	return bot, nil
 }
 
-// SetAPIEndpoint changes the Telegram Bot API endpoint used by the instance.
+// SetAPIEndpoint changes the DeBox Bot API endpoint used by the instance.
 func (bot *BotAPI) SetAPIEndpoint(apiEndpoint string) {
 	bot.apiEndpoint = apiEndpoint
 }
@@ -303,7 +303,7 @@ func hasFilesNeedingUpload(files []RequestFile) bool {
 	return false
 }
 
-// Request sends a Chattable to Telegram, and returns the APIResponse.
+// Request sends a Chattable to DeBox, and returns the APIResponse.
 func (bot *BotAPI) Request(c Chattable) (*APIResponse, error) {
 	params, err := c.params()
 	if err != nil {
@@ -329,7 +329,7 @@ func (bot *BotAPI) Request(c Chattable) (*APIResponse, error) {
 	return bot.MakeRequest(c.method(), params)
 }
 
-// Send will send a Chattable item to Telegram and provides the
+// Send will send a Chattable item to DeBox and provides the
 // returned Message.
 func (bot *BotAPI) Send(c Chattable) (Message, error) {
 	resp, err := bot.Request(c)
@@ -523,7 +523,7 @@ func (bot *BotAPI) CopyMessage(config CopyMessageConfig) (MessageID, error) {
 	return messageID, err
 }
 
-// EscapeText takes an input text and escape Telegram markup symbols.
+// EscapeText takes an input text and escape DeBox markup symbols.
 // In this way we can send a text without being afraid of having to escape the characters manually.
 // Note that you don't have to include the formatting style in the input text, or it will be escaped too.
 // If there is an error, an empty string will be returned.
