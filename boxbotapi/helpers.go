@@ -1,21 +1,5 @@
 package boxbotapi
 
-import (
-	"net/url"
-)
-
-// NewMessage creates a new Message.
-//
-// chatID is where to send it, text is the message text.
-//
-//	func NewMessage(chatID string, text string) MessageConfig {
-//		return MessageConfig{
-//			BaseChat: BaseChat{
-//				ChatID: chatID,
-//			},
-//			Text: text,
-//		}
-//	}
 func NewMessage(chatID, chatType string, text string) MessageConfig {
 	return MessageConfig{
 		BaseChat: BaseChat{
@@ -59,21 +43,6 @@ func NewUpdate(offset int) UpdateConfig {
 		Limit:   0,
 		Timeout: 0,
 	}
-}
-
-// NewWebhook creates a new webhook.
-//
-// link is the url parsable link you wish to get the updates.
-func NewWebhook(link string) (WebhookConfig, error) {
-	u, err := url.Parse(link)
-
-	if err != nil {
-		return WebhookConfig{}, err
-	}
-
-	return WebhookConfig{
-		URL: u,
-	}, nil
 }
 
 // NewRemoveKeyboard hides the keyboard, with the option for being selective
@@ -219,21 +188,4 @@ func NewCallbackWithAlert(id, text string) CallbackConfig {
 		Text:            text,
 		ShowAlert:       true,
 	}
-}
-
-// NewWebhookWithCert creates a new webhook with a certificate.
-//
-// link is the url you wish to get webhooks,
-// file contains a string to a file, FileReader, or FileBytes.
-func NewWebhookWithCert(link string, file RequestFileData) (WebhookConfig, error) {
-	u, err := url.Parse(link)
-
-	if err != nil {
-		return WebhookConfig{}, err
-	}
-
-	return WebhookConfig{
-		URL:         u,
-		Certificate: file,
-	}, nil
 }

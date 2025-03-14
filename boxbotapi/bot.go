@@ -9,7 +9,6 @@ import (
 	"io"
 	"io/ioutil"
 	"log"
-	"mime/multipart"
 	"net/http"
 	"net/url"
 	"strings"
@@ -170,105 +169,6 @@ func (bot *BotAPI) decodeAPIResponse(responseBody io.Reader, resp *APIResponse) 
 	return data, nil
 }
 
-// UploadFiles makes a request to the API with files.
-func (bot *BotAPI) UploadFiles(endpoint string, params Params, files []RequestFile) (*APIResponse, error) {
-	r, w := io.Pipe()
-	m := multipart.NewWriter(w)
-
-	// This code modified from the very helpful @HirbodBehnam
-	// https://github.com/go-telegram-bot-api/telegram-bot-api/issues/354#issuecomment-663856473
-	go func() {
-		defer w.Close()
-		defer m.Close()
-
-		for field, value := range params {
-			if err := m.WriteField(field, value); err != nil {
-				w.CloseWithError(err)
-				return
-			}
-		}
-
-		for _, file := range files {
-			if file.Data.NeedsUpload() {
-				name, reader, err := file.Data.UploadData()
-				if err != nil {
-					w.CloseWithError(err)
-					return
-				}
-
-				part, err := m.CreateFormFile(file.Name, name)
-				if err != nil {
-					w.CloseWithError(err)
-					return
-				}
-
-				if _, err := io.Copy(part, reader); err != nil {
-					w.CloseWithError(err)
-					return
-				}
-
-				if closer, ok := reader.(io.ReadCloser); ok {
-					if err = closer.Close(); err != nil {
-						w.CloseWithError(err)
-						return
-					}
-				}
-			} else {
-				value := file.Data.SendData()
-
-				if err := m.WriteField(file.Name, value); err != nil {
-					w.CloseWithError(err)
-					return
-				}
-			}
-		}
-	}()
-
-	if bot.Debug {
-		log.Printf("Endpoint: %s, params: %v, with %d files\n", endpoint, params, len(files))
-	}
-
-	method := fmt.Sprintf(bot.apiEndpoint, bot.Token, endpoint)
-
-	req, err := http.NewRequest("POST", method, r)
-	if err != nil {
-		return nil, err
-	}
-
-	req.Header.Set("Content-Type", m.FormDataContentType())
-
-	resp, err := bot.Client.Do(req)
-	if err != nil {
-		return nil, err
-	}
-	defer resp.Body.Close()
-
-	var apiResp APIResponse
-	bytes, err := bot.decodeAPIResponse(resp.Body, &apiResp)
-	if err != nil {
-		return &apiResp, err
-	}
-
-	if bot.Debug {
-		log.Printf("Endpoint: %s, response: %s\n", endpoint, string(bytes))
-	}
-
-	if !apiResp.Ok {
-		var parameters ResponseParameters
-
-		if apiResp.Parameters != nil {
-			parameters = *apiResp.Parameters
-		}
-
-		return &apiResp, &Error{
-			Message:            apiResp.Description,
-			ResponseParameters: parameters,
-		}
-	}
-
-	return &apiResp, nil
-}
-
 // GetMe fetches the currently authenticated bot.
 //
 // This method is called upon creation to validate the token,
@@ -293,39 +193,12 @@ func (bot *BotAPI) IsMessageToMe(message Message) bool {
 	return strings.Contains(message.Text, "@"+bot.Self.Name)
 }
 
-func hasFilesNeedingUpload(files []RequestFile) bool {
-	for _, file := range files {
-		if file.Data.NeedsUpload() {
-			return true
-		}
-	}
-
-	return false
-}
-
 // Request sends a Chattable to DeBox, and returns the APIResponse.
 func (bot *BotAPI) Request(c Chattable) (*APIResponse, error) {
 	params, err := c.params()
 	if err != nil {
 		return nil, err
 	}
-
-	if t, ok := c.(Fileable); ok {
-		files := t.files()
-
-		// If we have files that need to be uploaded, we should delegate the
-		// request to UploadFile.
-		if hasFilesNeedingUpload(files) {
-			return bot.UploadFiles(t.method(), params, files)
-		}
-
-		// However, if there are no files to be uploaded, there's likely things
-		// that need to be turned into params instead.
-		for _, file := range files {
-			params[file.Name] = file.Data.SendData()
-		}
-	}
-
 	return bot.MakeRequest(c.method(), params)
 }
 
@@ -362,20 +235,6 @@ func (bot *BotAPI) GetUpdates(config UpdateConfig) ([]Update, error) {
 		fmt.Println("GetUpdates error: ", err)
 	}
 	return updates, err
-}
-
-// GetWebhookInfo allows you to fetch information about a webhook and if
-// one currently is set, along with pending update count and error messages.
-func (bot *BotAPI) GetWebhookInfo() (WebhookInfo, error) {
-	resp, err := bot.MakeRequest("getWebhookInfo", nil)
-	if err != nil {
-		return WebhookInfo{}, err
-	}
-
-	var info WebhookInfo
-	err = json.Unmarshal(resp.Result, &info)
-
-	return info, err
 }
 
 // GetUpdatesChan starts and returns a channel for getting updates.
@@ -475,52 +334,6 @@ func (bot *BotAPI) HandleUpdate(r *http.Request) (*Update, error) {
 	}
 
 	return &update, nil
-}
-
-// WriteToHTTPResponse writes the request to the HTTP ResponseWriter.
-//
-// It doesn't support uploading files.
-//
-// See https://core.telegram.org/bots/api#making-requests-when-getting-updates
-// for details.
-func WriteToHTTPResponse(w http.ResponseWriter, c Chattable) error {
-	params, err := c.params()
-	if err != nil {
-		return err
-	}
-
-	if t, ok := c.(Fileable); ok {
-		if hasFilesNeedingUpload(t.files()) {
-			return errors.New("unable to use http response to upload files")
-		}
-	}
-
-	values := buildParams(params)
-	values.Set("method", c.method())
-
-	w.Header().Set("Content-Type", "application/x-www-form-urlencoded")
-	_, err = w.Write([]byte(values.Encode()))
-	return err
-}
-
-// CopyMessage copy messages of any kind. The method is analogous to the method
-// forwardMessage, but the copied message doesn't have a link to the original
-// message. Returns the MessageID of the sent message on success.
-func (bot *BotAPI) CopyMessage(config CopyMessageConfig) (MessageID, error) {
-	params, err := config.params()
-	if err != nil {
-		return MessageID{}, err
-	}
-
-	resp, err := bot.MakeRequest(config.method(), params)
-	if err != nil {
-		return MessageID{}, err
-	}
-
-	var messageID MessageID
-	err = json.Unmarshal(resp.Result, &messageID)
-
-	return messageID, err
 }
 
 // EscapeText takes an input text and escape DeBox markup symbols.
