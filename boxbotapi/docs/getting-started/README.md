@@ -1,16 +1,16 @@
 # Getting Started
 
 This library is designed as a simple wrapper around the DeBox Bot API.
-It's encouraged to read [DeBox's docs][telegram-docs] first to get an
+It's encouraged to read [DeBox's docs][debox-docs] first to get an
 understanding of what Bots are capable of doing. They also provide some good
 approaches to solve common problems.
 
-[telegram-docs]: https://core.telegram.org/bots
+[debox-docs]: https://core.debox.org/bots
 
 ## Installing
 
 ```bash
-go get -u github.com/go-telegram-bot-api/telegram-bot-api/v5
+go get -u github.com/go-debox-bot-api/debox-bot-api/v5
 ```
 
 ## A Simple Bot
@@ -22,7 +22,7 @@ messages repeating what you said. Make sure you get an API token from
 Let's start by constructing a new [BotAPI][bot-api-docs].
 
 [botfather]: https://t.me/Botfather
-[bot-api-docs]: https://pkg.go.dev/github.com/go-telegram-bot-api/telegram-bot-api/v5?tab=doc#BotAPI
+[bot-api-docs]: https://pkg.go.dev/github.com/go-debox-bot-api/debox-bot-api/v5?tab=doc#BotAPI
 
 ```go
 package main
@@ -30,7 +30,7 @@ package main
 import (
 	"os"
 
-	boxbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	boxbotapi "github.com/go-debox-bot-api/debox-bot-api/v5"
 )
 
 func main() {
@@ -58,7 +58,7 @@ Bot.
 Now that we've connected to DeBox, let's start getting updates and doing
 things. We can add this code in right after the line enabling debug mode.
 
-[get-me]: https://core.telegram.org/bots/api#getme
+[get-me]: https://core.debox.org/bots/api#getme
 
 ```go
 	// Create a new UpdateConfig struct with an offset of 0. Offsets are used

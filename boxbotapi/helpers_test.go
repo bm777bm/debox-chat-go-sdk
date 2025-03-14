@@ -4,7 +4,6 @@ import (
 	"testing"
 )
 
-
 func TestNewInlineKeyboardButtonLoginURL(t *testing.T) {
 	result := NewInlineKeyboardButtonLoginURL("text", LoginURL{
 		URL:                "url",

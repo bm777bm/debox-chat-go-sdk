@@ -353,14 +353,7 @@ type Message struct {
 	//
 	// optional
 	NewChatTitle string `json:"new_chat_title,omitempty"`
-	// NewChatPhoto is a chat photo was change to this value;
-	//
-	// optional
-	NewChatPhoto []PhotoSize `json:"new_chat_photo,omitempty"`
-	// DeleteChatPhoto is a service message: the chat photo was deleted;
-	//
-	// optional
-	DeleteChatPhoto bool `json:"delete_chat_photo,omitempty"`
+
 	// GroupChatCreated is a service message: the group has been created;
 	//
 	// optional
@@ -410,10 +403,6 @@ type Message struct {
 	//
 	// optional
 	ConnectedWebsite string `json:"connected_website,omitempty"`
-	// PassportData is a DeBox Passport data;
-	//
-	// optional
-	PassportData *PassportData `json:"passport_data,omitempty"`
 
 	// ReplyMarkup is the Inline keyboard attached to the message.
 	// login_url buttons are represented as ordinary url buttons.
@@ -443,58 +432,6 @@ type ResponseParameters struct {
 // MessageID represents a unique message identifier.
 type MessageID struct {
 	MessageID int `json:"message_id"`
-}
-
-// PhotoSize represents one size of a photo or a file / sticker thumbnail.
-type PhotoSize struct {
-	// FileID identifier for this file, which can be used to download or reuse
-	// the file
-	FileID string `json:"file_id"`
-	// FileUniqueID is the unique identifier for this file, which is supposed to
-	// be the same over time and for different bots. Can't be used to download
-	// or reuse the file.
-	FileUniqueID string `json:"file_unique_id"`
-	// Width photo width
-	Width int `json:"width"`
-	// Height photo height
-	Height int `json:"height"`
-	// FileSize file size
-	//
-	// optional
-	FileSize int `json:"file_size,omitempty"`
-}
-
-// Animation represents an animation file.
-type Animation struct {
-	// FileID is the identifier for this file, which can be used to download or reuse
-	// the file
-	FileID string `json:"file_id"`
-	// FileUniqueID is the unique identifier for this file, which is supposed to
-	// be the same over time and for different bots. Can't be used to download
-	// or reuse the file.
-	FileUniqueID string `json:"file_unique_id"`
-	// Width video width as defined by sender
-	Width int `json:"width"`
-	// Height video height as defined by sender
-	Height int `json:"height"`
-	// Duration of the video in seconds as defined by sender
-	Duration int `json:"duration"`
-	// Thumbnail animation thumbnail as defined by sender
-	//
-	// optional
-	Thumbnail *PhotoSize `json:"thumb,omitempty"`
-	// FileName original animation filename as defined by sender
-	//
-	// optional
-	FileName string `json:"file_name,omitempty"`
-	// MimeType of the file as defined by sender
-	//
-	// optional
-	MimeType string `json:"mime_type,omitempty"`
-	// FileSize file size
-	//
-	// optional
-	FileSize int `json:"file_size,omitempty"`
 }
 
 // Audio represents an audio file to be treated as music by the DeBox clients.
@@ -528,10 +465,6 @@ type Audio struct {
 	//
 	// optional
 	FileSize int `json:"file_size,omitempty"`
-	// Thumbnail is the album cover to which the music file belongs
-	//
-	// optional
-	Thumbnail *PhotoSize `json:"thumb,omitempty"`
 }
 
 // Video represents a video file.
@@ -549,10 +482,6 @@ type Video struct {
 	Height int `json:"height"`
 	// Duration of the video in seconds as defined by sender
 	Duration int `json:"duration"`
-	// Thumbnail video thumbnail
-	//
-	// optional
-	Thumbnail *PhotoSize `json:"thumb,omitempty"`
 	// FileName is the original filename as defined by sender
 	//
 	// optional
@@ -840,4 +769,18 @@ type BotCommandScope struct {
 	Type   string `json:"type"`
 	ChatID int64  `json:"chat_id,omitempty"`
 	UserID int64  `json:"user_id,omitempty"`
+}
+
+type UITagA struct {
+	Uitag string `json:"uitag"`
+	Text  string `json:"text omitempty"`
+	Href  string `json:"href omitempty"`
+}
+
+type UITagImg struct {
+	Uitag    string `json:"uitag"`              //img
+	Src      string `json:"src omitempty"`      //img src
+	Position string `json:"position omitempty"` // head foot
+	Height   string `json:"height omitempty"`   //img height，大于0生效，否则表示没设置将用默认值
+	Href     string `json:"href omitempty"`     // img href
 }

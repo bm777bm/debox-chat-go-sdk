@@ -23,7 +23,7 @@ pull request!
   while Golang uses UTF8. It's possible to convert between the two, see
   [issue #231][issue-231] for more details.
 
-[issue-231]: https://github.com/go-telegram-bot-api/telegram-bot-api/issues/231
+[issue-231]: https://github.com/go-debox-bot-api/debox-bot-api/issues/231
 
 ## GetUpdatesChan
 
@@ -46,7 +46,7 @@ pull request!
   added to groups will need to be removed and readded for the changes to take
   effect. You can read more on the [DeBox Bot API docs][api-docs].
 
-[api-docs]: https://core.telegram.org/bots/faq#what-messages-will-my-bot-get
+[api-docs]: https://core.debox.org/bots/faq#what-messages-will-my-bot-get
 
 ## User and Chat ID size
 

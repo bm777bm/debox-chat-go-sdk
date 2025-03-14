@@ -55,7 +55,7 @@ func main() {
 		log.Panic(err)
 	}
 
-	// Set this to true to log all interactions with telegram servers
+	// Set this to true to log all interactions with debox servers
 	bot.Debug = true
 
 	u := boxbotapi.NewUpdate(0)
@@ -65,7 +65,7 @@ func main() {
 	ctx := context.Background()
 	ctx, cancel := context.WithCancel(ctx)
 
-	// `updates` is a golang channel which receives telegram updates
+	// `updates` is a golang channel which receives debox updates
 	updates := bot.GetUpdatesChan(u)
 
 	// Pass cancellable context to goroutine
