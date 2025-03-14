@@ -10,42 +10,6 @@ import (
 	boxbotapi "github.com/debox-pro/debox-chat-go-sdk/boxbotapi"
 )
 
-var (
-	// Menu texts
-	firstMenu = "<b>Menu 1</b><br/>A box button message."
-
-	// Button texts
-	nextButton     = "Next"
-	backButton     = "Back"
-	tutorialButton = "Tutorial"
-	tokenUrl       = "https://deswap.pro/?from_chain_id=-200&from_address=11111111111111111111111111111111&to_chain_id=-200&to_address=BpykKPT9DoPy2WoZspkd7MvUb9QAPtX86ojmrg48pump"
-	// Store bot screaming status
-	bot *boxbotapi.BotAPI
-
-	// Keyboard layout for the first menu. One button, one row
-
-	firstMenuMarkup = boxbotapi.NewInlineKeyboardMarkup(
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonURL("url1", tokenUrl),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonData(nextButton, nextButton),
-			boxbotapi.NewInlineKeyboardButtonData(backButton, backButton),
-		),
-	)
-
-	// Keyboard layout for the second menu. Two buttons, one per row
-	secondMenuMarkup = boxbotapi.NewInlineKeyboardMarkup(
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonURL(tutorialButton, tokenUrl),
-		),
-		boxbotapi.NewInlineKeyboardRow(
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("BTC", "", "61", "#ff0000"),
-			boxbotapi.NewInlineKeyboardButtonDataWithColor("BNB", "", "27.5%", "#00ff00"),
-		),
-	)
-)
-
 func main() {
 	var err error
 	// bot, err = boxbotapi.NewBotAPI("<YOUR_BOT_TOKEN_HERE>")
@@ -54,7 +18,6 @@ func main() {
 		// Abort if something is wrong
 		log.Panic(err)
 	}
-
 	// Set this to true to log all interactions with debox servers
 	bot.Debug = true
 
