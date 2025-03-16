@@ -9,11 +9,11 @@ import (
 	"log"
 	"os"
 
-	boxbotapi "github.com/go-debox-bot-api/debox-bot-api/v5"
+	boxbotapi "github.com/debox-pro/debox-chat-go-sdk/boxbotapi"
 )
 
 func main() {
-	bot, err := boxbotapi.NewBotAPI(os.Getenv("TELEGRAM_APITOKEN"))
+	bot, err := boxbotapi.NewBotAPI(os.Getenv("DEBOX_APITOKEN"))
 	if err != nil {
 		log.Panic(err)
 	}

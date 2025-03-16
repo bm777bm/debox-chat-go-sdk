@@ -10,7 +10,7 @@ approaches to solve common problems.
 ## Installing
 
 ```bash
-go get -u github.com/go-debox-bot-api/debox-bot-api/v5
+go get -u github.com/debox-pro/debox-chat-go-sdk/boxbotapi
 ```
 
 ## A Simple Bot
@@ -22,7 +22,7 @@ messages repeating what you said. Make sure you get an API token from
 Let's start by constructing a new [BotAPI][bot-api-docs].
 
 [botfather]: https://t.me/Botfather
-[bot-api-docs]: https://pkg.go.dev/github.com/go-debox-bot-api/debox-bot-api/v5?tab=doc#BotAPI
+[bot-api-docs]: https://pkg.go.dev/github.com/debox-pro/debox-chat-go-sdk/boxbotapi?tab=doc#BotAPI
 
 ```go
 package main
@@ -30,15 +30,14 @@ package main
 import (
 	"os"
 
-	boxbotapi "github.com/go-debox-bot-api/debox-bot-api/v5"
+	boxbotapi "github.com/debox-pro/debox-chat-go-sdk/boxbotapi"
 )
 
 func main() {
-	bot, err := boxbotapi.NewBotAPI(os.Getenv("TELEGRAM_APITOKEN"))
+	bot, err := boxbotapi.NewBotAPI(os.Getenv("DEBOX_APITOKEN"))
 	if err != nil {
 		panic(err)
 	}
-
 	bot.Debug = true
 }
 ```
@@ -87,10 +86,6 @@ things. We can add this code in right after the line enabling debug mode.
 		// reply! We'll take the Chat ID and Text from the incoming message
 		// and use it to create a new message.
 		msg := boxbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
-		// We'll also say that this message is a reply to the previous message.
-		// For any other specifications than Chat ID or Text, you'll need to
-		// set fields on the `MessageConfig`.
-		msg.ReplyToMessageID = update.Message.MessageID
 
 		// Okay, we're sending our message off! We don't care about the message
 		// we just sent, so we'll discard it.

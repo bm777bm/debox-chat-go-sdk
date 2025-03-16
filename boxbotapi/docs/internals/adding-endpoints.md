@@ -32,7 +32,7 @@ type DeleteMessageConfig struct {
 }
 ```
 
-Note that `ChatID` is an `int64`. DeBox chat IDs can be greater than 32 bits.
+Note that `ChatID` is an `string`. DeBox chat IDs can be greater than 32 bits.
 
 Okay, we now have our struct. But we can't send it yet. It doesn't implement
 `Chattable` so it won't work with `Request` or `Send`.
@@ -82,56 +82,6 @@ func (config DeleteMessageConfig) params() (Params, error) {
 }
 ```
 
-### Uploading Files
-
-Let's imagine that for some reason deleting a message requires a document to be
-uploaded and an optional thumbnail for that document. To add file upload
-support we need to implement `Fileable`. This only requires one additional
-method.
-
-```go
-type Fileable interface {
-	Chattable
-	files() []RequestFile
-}
-```
-
-First, let's add some fields to store our files in. Most of the standard Configs
-have similar fields for their files.
-
-```diff
- type DeleteMessageConfig struct {
-     ChannelUsername string
-     ChatID          int64
-     MessageID       int
-+    Delete          RequestFileData
-+    Thumb           RequestFileData
- }
-```
-
-Adding another method is pretty simple. We'll always add a file named `delete`
-and add the `thumb` file if we have one.
-
-```go
-func (config DeleteMessageConfig) files() []RequestFile {
-	files := []RequestFile{{
-		Name: "delete",
-		Data: config.Delete,
-	}}
-
-	if config.Thumb != nil {
-		files = append(files, RequestFile{
-			Name: "thumb",
-			Data: config.Thumb,
-		})
-	}
-
-	return files
-}
-```
-
-And now our files will upload! It will transparently handle uploads whether File
-is a `FilePath`, `FileURL`, `FileBytes`, `FileReader`, or `FileID`.
 
 ### Base Configs
 
@@ -149,7 +99,6 @@ type MessageConfig struct {
 	BaseChat
 	Text                  string
 	ParseMode             string
-	DisableWebPagePreview bool
 }
 ```
 
@@ -169,9 +118,6 @@ func (config MessageConfig) params() (Params, error) {
 	return params, nil
 }
 ```
-
-Similarly, there's a `BaseFile` struct for adding an associated file and
-`BaseEdit` struct for editing messages.
 
 ## Making it Friendly
 
