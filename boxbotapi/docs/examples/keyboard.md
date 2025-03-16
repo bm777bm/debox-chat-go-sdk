@@ -52,7 +52,7 @@ func main() {
 		case "open":
 			msg.ReplyMarkup = numericKeyboard
 		case "close":
-			msg.ReplyMarkup = boxbotapi.NewRemoveKeyboard(true)
+			msg.ReplyMarkup = nil
 		}
 
 		if _, err := bot.Send(msg); err != nil {
