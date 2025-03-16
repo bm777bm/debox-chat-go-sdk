@@ -8,10 +8,8 @@
   - [Command Handling](./examples/command-handling.md)
   - [Keyboard](./examples/keyboard.md)
   - [Inline Keyboard](./examples/inline-keyboard.md)
-- [Change Log](./changelog.md)
 
 # Contributing
 
 - [Internals](./internals/README.md)
   - [Adding Endpoints](./internals/adding-endpoints.md)
-  - [Uploading Files](./internals/uploading-files.md)

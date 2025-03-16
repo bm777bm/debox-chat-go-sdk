@@ -34,7 +34,7 @@ import (
 )
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI(os.Getenv("TELEGRAM_APITOKEN"))
+	bot, err := boxbotapi.NewBotAPI(os.Getenv("TELEGRAM_APITOKEN"))
 	if err != nil {
 		panic(err)
 	}
@@ -64,7 +64,7 @@ things. We can add this code in right after the line enabling debug mode.
 	// Create a new UpdateConfig struct with an offset of 0. Offsets are used
 	// to make sure DeBox knows we've handled previous values and we don't
 	// need them repeated.
-	updateConfig := tgbotapi.NewUpdate(0)
+	updateConfig := boxbotapi.NewUpdate(0)
 
 	// Tell DeBox we should wait up to 30 seconds on each request for an
 	// update. This way we can get information just as quickly as making many
@@ -86,7 +86,7 @@ things. We can add this code in right after the line enabling debug mode.
 		// Now that we know we've gotten a new message, we can construct a
 		// reply! We'll take the Chat ID and Text from the incoming message
 		// and use it to create a new message.
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		msg := boxbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
 		// We'll also say that this message is a reply to the previous message.
 		// For any other specifications than Chat ID or Text, you'll need to
 		// set fields on the `MessageConfig`.

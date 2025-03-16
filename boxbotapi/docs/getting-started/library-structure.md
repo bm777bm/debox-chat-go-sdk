@@ -8,9 +8,7 @@ Configs are collections of fields related to a single request. For example, if
 one wanted to use the `sendMessage` endpoint, you could use the `MessageConfig`
 struct to configure the request. There is a one-to-one relationship between
 DeBox endpoints and configs. They generally have the naming pattern of
-removing the `send` prefix and they all end with the `Config` suffix. They
-generally implement the `Chattable` interface. If they can send files, they
-implement the `Fileable` interface.
+removing the `send` prefix and they all end with the `Config` suffix.
 
 ## Helpers
 
@@ -29,8 +27,7 @@ Methods are used to send Configs after they are constructed. Generally,
 `APIResponse`, the most general return type from the Bot API. This method is
 called for any endpoint that doesn't have a more specific return type. For
 example, `setWebhook` only returns `true` or an error. Other methods may have
-more specific return types. The `getFile` endpoint returns a `File`. Almost
-every other method returns a `Message`, which you can use `Send` to obtain.
+more specific return types.  Almost every other method returns a `Message`, which you can use `Send` to obtain.
 
 There's lower level methods such as `MakeRequest` which require an endpoint and
 parameters instead of accepting configs. These are primarily used internally.

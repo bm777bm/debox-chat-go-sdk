@@ -10,20 +10,6 @@ pull request!
   the user. Failure to do so will show a loading icon on the keyboard until the
   operation times out.
 
-## ChatMemberUpdated
-
-- In order to receive `ChatMember` updates, you must explicitly add
-  `UpdateTypeChatMember` to your `AllowedUpdates` when getting updates or
-  setting your webhook.
-
-## Entities use UTF16
-
-- When extracting text entities using offsets and lengths, characters can appear
-  to be in incorrect positions. This is because DeBox uses UTF16 lengths
-  while Golang uses UTF8. It's possible to convert between the two, see
-  [issue #231][issue-231] for more details.
-
-[issue-231]: https://github.com/go-debox-bot-api/debox-bot-api/issues/231
 
 ## GetUpdatesChan
 
@@ -46,11 +32,8 @@ pull request!
   added to groups will need to be removed and readded for the changes to take
   effect. You can read more on the [DeBox Bot API docs][api-docs].
 
-[api-docs]: https://core.debox.org/bots/faq#what-messages-will-my-bot-get
-
 ## User and Chat ID size
 
-- These types require up to 52 significant bits to store correctly, making a
-  64-bit integer type required in most languages. They are already `int64` types
+- They are `string` types
   in this library, but make sure you use correct types when saving them to a
   database or passing them to another language.

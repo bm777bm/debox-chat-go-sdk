@@ -13,21 +13,21 @@ import (
 	boxbotapi "github.com/go-debox-bot-api/debox-bot-api/v5"
 )
 
-var numericKeyboard = tgbotapi.NewReplyKeyboard(
-	tgbotapi.NewKeyboardButtonRow(
-		tgbotapi.NewKeyboardButton("1"),
-		tgbotapi.NewKeyboardButton("2"),
-		tgbotapi.NewKeyboardButton("3"),
+var numericKeyboard = boxbotapi.NewReplyKeyboard(
+	boxbotapi.NewKeyboardButtonRow(
+		boxbotapi.NewKeyboardButton("1"),
+		boxbotapi.NewKeyboardButton("2"),
+		boxbotapi.NewKeyboardButton("3"),
 	),
-	tgbotapi.NewKeyboardButtonRow(
-		tgbotapi.NewKeyboardButton("4"),
-		tgbotapi.NewKeyboardButton("5"),
-		tgbotapi.NewKeyboardButton("6"),
+	boxbotapi.NewKeyboardButtonRow(
+		boxbotapi.NewKeyboardButton("4"),
+		boxbotapi.NewKeyboardButton("5"),
+		boxbotapi.NewKeyboardButton("6"),
 	),
 )
 
 func main() {
-	bot, err := tgbotapi.NewBotAPI(os.Getenv("TELEGRAM_APITOKEN"))
+	bot, err := boxbotapi.NewBotAPI(os.Getenv("TELEGRAM_APITOKEN"))
 	if err != nil {
 		log.Panic(err)
 	}
@@ -36,7 +36,7 @@ func main() {
 
 	log.Printf("Authorized on account %s", bot.Self.UserName)
 
-	u := tgbotapi.NewUpdate(0)
+	u := boxbotapi.NewUpdate(0)
 	u.Timeout = 60
 
 	updates := bot.GetUpdatesChan(u)
@@ -46,13 +46,13 @@ func main() {
 			continue
 		}
 
-		msg := tgbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
+		msg := boxbotapi.NewMessage(update.Message.Chat.ID, update.Message.Text)
 
 		switch update.Message.Text {
 		case "open":
 			msg.ReplyMarkup = numericKeyboard
 		case "close":
-			msg.ReplyMarkup = tgbotapi.NewRemoveKeyboard(true)
+			msg.ReplyMarkup = boxbotapi.NewRemoveKeyboard(true)
 		}
 
 		if _, err := bot.Send(msg); err != nil {
